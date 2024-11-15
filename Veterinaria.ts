@@ -1,7 +1,9 @@
 import { Persona } from "./Persona";
 import { Cliente } from "./Cliente";
 import { Paciente } from "./Paciente";
-import { ABM } from "./ABM";
+
+import * as rls from 'readline-sync';
+
 
 // Clase Veterinaria
 export class Veterinaria extends Persona {
@@ -20,22 +22,26 @@ export class Veterinaria extends Persona {
             cli.setVisitas(cli.getVisitas()+1); // Incrementar visitas
         }
     }
-
-    // Da de alta un nuevo Paciente
-    public darDeAltaPaciente(): void{
-        try{
-            this.pacientes.push(ABM.nuevoPaciente(this.pacientes, this.clientes));
-        }catch(error){
-            console.error(`${(error as Error).name}: ${(error as Error).message}`);
-        }
+   
+    //Crea un nueva Paciente
+    public darDeAltaPaciente(idDuenio?: number): Paciente|undefined{
+        console.log("Ingrese los datos del Paciente:")
+        let nuevaEntidad = Veterinaria.altaEntidad(this.pacientes);
+        if (idDuenio==undefined){
+            idDuenio = rls.questionInt("ID del dueño: ");
+        }        
+        let especie: string = rls.question("Especie: ");
+        let paciente = new Paciente(nuevaEntidad.getID(), idDuenio, nuevaEntidad.getNombre(), especie, this.clientes);
+        this.pacientes.push(paciente);
+        return paciente;
     }
 
     // Da de alta un nuevo Cliente
-    public darDeAltaCliente(): void{
-        try{
-           this.clientes.push(ABM.nuevoCliente(this.clientes));
-        }catch(error){
-            console.error(`${(error as Error).name}: ${(error as Error).message}`);
-        }
+    public darDeAltaCliente(): Cliente|undefined{
+        console.log("Ingrese los datos del Cliente:")
+        let persona : Persona = Persona.altaPersona(this.clientes);
+        let cliente : Cliente = new Cliente(persona.getID(), persona.getNombre(), persona.getDireccion(), persona.getTelefono());
+        this.clientes.push(cliente);
+        return cliente;
     }
 }

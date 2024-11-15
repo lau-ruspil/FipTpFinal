@@ -1,5 +1,7 @@
 import { Entidad } from "./Entidad";
 
+import * as rls from 'readline-sync';
+
 // Clase Persona
 // ACLARACIÓN: Una Persona puede ser tanto física como jurídica
 export class Persona extends Entidad {
@@ -37,5 +39,13 @@ export class Persona extends Entidad {
             throw Error(`Teléfono inválido (teléfono: '${telefono}')`);
         }
         this.telefono = telefono;
+    }
+
+    // Crea una nueva persona 
+    public static altaPersona(personas: Entidad[]): Persona{
+        let nuevaEntidad = Persona.altaEntidad(personas);
+        let direccion: string = rls.question("Dirección: ");
+        let telefono: string = rls.question("Teléfono: ");
+        return new Persona(nuevaEntidad.getID(), nuevaEntidad.getNombre(), direccion, telefono);
     }
 }

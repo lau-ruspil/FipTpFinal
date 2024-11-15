@@ -1,5 +1,7 @@
 import { Persona } from "./Persona";
 
+import * as rls from 'readline-sync';
+
 // Clase Proveedor
 export class Proveedor extends Persona{
     private insumos: string[] = [];

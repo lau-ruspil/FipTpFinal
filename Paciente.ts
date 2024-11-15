@@ -1,5 +1,8 @@
 import { Entidad } from './Entidad';
+import { Persona } from './Persona';
 import { Cliente } from './Cliente';
+
+import * as rls from 'readline-sync';
 
 // Clase Paciente
 export class Paciente extends Entidad{
