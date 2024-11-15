@@ -1,31 +1,26 @@
-import { ICliente } from "./ICliente";
 import { Persona } from "./Persona";
 
-export class Cliente extends Persona implements ICliente {
-    private vip: boolean;
+// Clase Cliente
+export class Cliente extends Persona {
     private visitas: number;
 
     //Constructor de la clase Cliente
-    constructor (UID: number, nombre: string, telefono: string, direccion: string, vip:boolean, visitas: number){
-        super(UID, nombre, telefono, direccion);
-        this.vip = vip;
-        this.visitas = visitas;
+    constructor (id: number, nombre: string, direccion: string, telefono: string){
+        super(id, nombre, direccion, telefono);
+        this.visitas = 0;
     }
 
-    public getVip(): boolean{
-       return this.vip; 
+    // Retorna si el Cliente es VIP (Si tiene más de 5 visitas realizadas)
+    public esVip(): boolean{
+       return this.getVisitas()>=5; 
     }
 
+    // Retorna el número de visitas realizadas
     public getVisitas(): number{
         return this.visitas;
     }
-
-    public setVip(vip: boolean): void{
-        if (!vip==undefined){
-            this.vip = vip;
-        }
-    }
     
+    // Establece el número de visitas
     public setVisitas(visitas: number): void{
         if (!visitas==undefined&&visitas>0){
             this.visitas = visitas

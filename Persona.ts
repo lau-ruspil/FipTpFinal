@@ -1,51 +1,41 @@
-import { IPersona } from "./IPersona";
+import { Entidad } from "./Entidad";
 
-export class Persona implements IPersona{
-    private UID: number;
-    private nombre: string;
-    private telefono: string;
-    private direccion: string;
+// Clase Persona
+// ACLARACIÓN: Una Persona puede ser tanto física como jurídica
+export class Persona extends Entidad {
+    private direccion: string = '';
+    private telefono: string = '';    
 
-    // Constructor de la clase Persona
-    constructor (UID: number, nombre: string, telefono: string, direccion: string){
-        this.UID = UID;
-        this.nombre = nombre;
-        this.telefono = telefono;
+    //Constructor de la clase Persona
+    constructor (id: number, nombre: string, direccion: string, telefono: string){
+        super(id, nombre);
+        this.setDireccion(direccion);
+        this.setTelefono(telefono);
+    }
+
+    // Retorna la dirección de la Persona
+    public getDireccion(): string{
+        return this.direccion;
+    }
+
+    // Establece la dirección de la Persona
+    public setDireccion(direccion: string): void{
+        if (direccion==undefined || direccion.length<1){
+            throw Error(`Dirección inválida (dirección: '${direccion}')`);
+        } 
         this.direccion = direccion;
     }
 
-    //Getters / Setters
-    public getUID(): number{
-        return this.UID;
-    }
-
-    public getNombre(): string{
-        return this.nombre;
-    }
-
+    // Retorna el teléfono de la Persona
     public getTelefono(): string{
         return this.telefono;
     }
 
-    public getDireccion(): string{
-        return this.direccion
-    }
-
-    public setNombre(nombre: string): void{
-        if (!nombre==undefined&&nombre.length>0){
-            this.nombre = nombre;
+    // Establece el teléfono la Persona
+    public setTelefono(telefono: string):void {
+        if (telefono==undefined||telefono.length<1){
+            throw Error(`Teléfono inválido (teléfono: '${telefono}')`);
         }
-    }
-
-    public setDireccion(direccion: string): void{
-        if (!direccion==undefined&&direccion.length>0){
-            this.nombre = direccion;
-        }
-    }
-
-    public setTelefono(telefono: string): void{
-        if (!telefono==undefined&&telefono.length>0){
-            this.telefono = telefono;
-        }
+        this.telefono = telefono;
     }
 }

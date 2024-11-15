@@ -1,16 +1,16 @@
-import { Paciente } from "./Paciente";
 import { Persona } from "./Persona";
 import { Cliente } from "./Cliente";
-import { Proveedor } from "./Proveedor"
+import { Paciente } from "./Paciente";
+import { ABM } from "./ABM";
 
+// Clase Veterinaria
 export class Veterinaria extends Persona {
-    private clientes: Cliente[]
-    private proveedores: Proveedor[];
+    private clientes: Cliente[] = []
+    private pacientes: Paciente[] = []
     
-    constructor (UID: number, nombre: string, telefono: string, direccion: string){
-        super(UID, nombre, telefono, direccion);
-        this.clientes = []
-        this.proveedores = [];
+    // Constructor de la case
+    constructor (id: number, nombre: string, direccion: string, telefono: string){
+        super(id, nombre, direccion, telefono);
     }
 
     // Registra una visita de un cliente determinado (Las visitas se cuentan desde
@@ -21,7 +21,21 @@ export class Veterinaria extends Persona {
         }
     }
 
-    public agregarCliente(cli: Cliente){
-        
+    // Da de alta un nuevo Paciente
+    public darDeAltaPaciente(): void{
+        try{
+            this.pacientes.push(ABM.nuevoPaciente(this.pacientes, this.clientes));
+        }catch(error){
+            console.error(`${(error as Error).name}: ${(error as Error).message}`);
+        }
+    }
+
+    // Da de alta un nuevo Cliente
+    public darDeAltaCliente(): void{
+        try{
+           this.clientes.push(ABM.nuevoCliente(this.clientes));
+        }catch(error){
+            console.error(`${(error as Error).name}: ${(error as Error).message}`);
+        }
     }
 }

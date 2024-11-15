@@ -1,31 +1,43 @@
-import { IPaciente } from './IPaciente';
+import { Entidad } from './Entidad';
+import { Cliente } from './Cliente';
 
-export class Paciente implements IPaciente{
-    private UID: number;
-    private clienteUID: number;
-    private nombre: string;
-    private especie: string;
+// Clase Paciente
+export class Paciente extends Entidad{
+    private idDuenio: number = 0;
+    private especie: string = '';
 
-    constructor (UID: number, clienteUID: number, nombre: string, especie: string){
-        this.UID = UID;
-        this.clienteUID = clienteUID;
-        this.nombre = nombre;
-        this.especie = especie;
+    // Constructor de la clase especie
+    constructor (id: number, idDuenio: number, nombre: string, especie: string, clientes: Cliente[]){
+        super(id, nombre);
+        this.setIdDuenio(idDuenio, clientes);
+        this.setEspecie(especie);
     }
 
-    public getUID(): number{
-        return this.UID;
+    // Retorna el ID del cliente dueño del Paciente
+    public getIdDuenio(): number{
+        return this.idDuenio;
     }
 
-    public getClienteUID(): number{
-        return this.clienteUID;
-    }
-
-    public getNombre(): string{
-        return this.nombre;
-    }
-
+    // Retorna la especie a la que pertenece
     public getEspecie(): string{
         return this.especie;
+    }
+
+    // Establece el ID del cliente dueño del Paciente
+    public setIdDuenio(idDuenio: number, clientes: Entidad[]): void{
+        if (idDuenio==undefined || clientes.findIndex((cliente)=>cliente.getID()==idDuenio)<0){
+            throw Error(`Id de cliente inválido o no existe. (cliente: ${idDuenio})`)            
+        }
+        this.idDuenio = idDuenio;
+    }
+
+    // Establece la especie del paciente
+    // especie: Debe ser una de las especies indicadas en el arreglo
+    public setEspecie(especie: string): void{
+        const especies = ['gato', 'perro', 'exótica'];
+        if (especie==undefined || !especies.includes(especie.toLowerCase())){
+            throw Error(`Especie inválida. (especie: ${especie}). Las opciones permitidas son [${especies}].`)            
+        }
+        this.especie = especie.toLowerCase();
     }
 }
