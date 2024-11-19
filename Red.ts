@@ -120,7 +120,12 @@ export class Red {
 		}
 	}
 
+	// Modifica una Veterinaria
 	public modificarVeterinaria(): void {
+		if (this.veterinarias.length==0){
+			console.warn(`No hay registros cargados.`);
+			return;
+		}
 		// Solicitar el nombre de la veterinara a modificar
 		let nombre: string = rls.question(
 			"Ingrese el nombre de la Veterinaria que desea modificar: "
@@ -168,7 +173,12 @@ export class Red {
 		}
 	}
 
+	// Modifica un proveedor
 	public modificarProveedor(): void {
+		if (this.proveedores.length==0){
+			console.warn(`No hay registros cargados.`);
+			return;
+		}
 		let nombre: string = rls.question(
 			"Ingrese el nombre del Proveedor que desea modificar: "
 		);
@@ -241,24 +251,9 @@ export class Red {
             try{    
                 switch(opcion){
                     case 0: this.darDeAltaVeterinaria(); break;					
-                    case 1: if (this.veterinarias.length==0){
-								console.warn(`No hay registros cargados.`)
-							}else{
-								this.modificarVeterinaria(); 
-							}					
-							break;
-                    case 2: if (this.veterinarias.length==0){
-								console.warn(`No hay registros cargados.`)
-							}else{
-								Entidad.darDeBajaEntidad(this.veterinarias);
-							}
-							break;
-                    case 3: if (this.veterinarias.length==0){
-								console.warn(`No hay registros cargados.`)
-							}else{
-                                (Entidad.obtenerEntidad(this.veterinarias) as Veterinaria)?.mostrarMenu();                                
-                    		}
-							break;
+                    case 1: this.modificarVeterinaria(); break;
+                    case 2: Entidad.darDeBajaEntidad(this.veterinarias); break;
+                    case 3:(Entidad.obtenerEntidad(this.veterinarias) as Veterinaria)?.mostrarMenu(); break;
                 }
             }catch(error){
                 console.error(`${(error as Error).name}: ${(error as Error).message}`);
@@ -278,25 +273,9 @@ export class Red {
             try{    
                 switch(opcion){
                     case 0: this.darDeAltaProovedor(); break;
-                    case 1: if (this.proveedores.length==0){
-								console.warn(`No hay registros cargados.`)
-							}else{
-								this.modificarProveedor(); 
-							}
-							break;
-                    case 2: if (this.proveedores.length==0){
-								console.warn(`No hay registros cargados.`)
-							}else{
-								Entidad.darDeBajaEntidad(this.proveedores); 
-							}
-							break;
-                    case 3: if (this.proveedores.length==0){
-								console.warn(`No hay registros cargados.`)
-							}else{
-                                //(Entidad.obtenerEntidad(this.proveedores) as Proveedor).mostrarMenu();
-							}
-                            break;
-
+                    case 1: this.modificarProveedor(); break;
+                    case 2: Entidad.darDeBajaEntidad(this.proveedores); break;
+                    case 3: //(Entidad.obtenerEntidad(this.proveedores) as Proveedor).mostrarMenu(); break;
                 }                
             }catch(error){
                 console.error(`${(error as Error).name}: ${(error as Error).message}`);

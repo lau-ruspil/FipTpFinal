@@ -78,6 +78,11 @@ export class Entidad implements IEntidad {
     
     // Elimina una entidad
     public static darDeBajaEntidad(entidades: Entidad[]): void {
+		if (entidades.length==0){
+			console.warn(`No hay registros cargados.`)
+			return
+		}
+		
 		// Solicita el nombre de la entidad a eliminar
 		let id : number = rls.questionInt(`Ingrese el ID a eliminar: `);
         const index: number  = entidades.findIndex(entidad => entidad.getID() == id)
@@ -97,6 +102,11 @@ export class Entidad implements IEntidad {
 
     // Retorna una Entidad dada su ID
     public static obtenerEntidad(entidades: Entidad[]): Entidad|undefined {
+		if (entidades.length==0){
+			console.warn(`No hay registros cargados.`)
+			return
+		}
+
 		// Solicita el nombre de la entidad a eliminar
 		let id : number = rls.questionInt(`Ingrese el ID a seleccionar: `);
         const index: number  = entidades.findIndex(entidad => entidad.getID() == id)
