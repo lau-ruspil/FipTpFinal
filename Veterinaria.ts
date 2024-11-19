@@ -188,17 +188,17 @@ export class Veterinaria extends Persona {
     // SUBMENU PACIENTES
     private mostrarSubMenuPacientes(): void{        
         let opcion: number = -1;
-        while (opcion!==4){
+        while (opcion!==2){
             console.clear()
+			console.log('CLIENTES');
+            Entidad.mostrarListado(this.clientes); 
             console.log('PACIENTES');
             Entidad.mostrarListado(this.pacientes); 
-            opcion = rls.keyInSelect(['AGREGAR', 'MODIFICAR', 'ELIMINAR', 'SELECCIONAR', 'VOLVER'], 'Opción: ', {caseSensitive:true, guide:false, cancel: false});
+            opcion = rls.keyInSelect(['AGREGAR', 'ELIMINAR', 'VOLVER'], 'Opción: ', {caseSensitive:true, guide:false, cancel: false});
             try{    
                 switch(opcion){
                     case 0: this.darDeAltaPaciente(); break;
-                    case 1: //this.modificarPaciente(); break;
-                    case 2: Entidad.darDeBajaEntidad(this.pacientes); break;
-                    //case 3: this.proveedores.mostrarMenu();
+                    case 1: Entidad.darDeBajaEntidad(this.pacientes); break;
                 }
             }catch(error){
                 console.error(`${(error as Error).name}: ${(error as Error).message}`);
