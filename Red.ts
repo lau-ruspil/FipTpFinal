@@ -230,7 +230,7 @@ export class Red {
         while (opcion!==3){
             console.clear()
             console.log('PROVEEDORES');
-            Entidad.mostrarListado(this.proveedores); 
+            Proveedor.mostrarListado(this.proveedores); 
             opcion = rls.keyInSelect(['AGREGAR', 'MODIFICAR', 'ELIMINAR', 'VOLVER'], 'Opción: ', {caseSensitive:true, guide:false, cancel: false});
             try{    
                 switch(opcion){

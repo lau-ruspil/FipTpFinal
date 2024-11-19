@@ -27,4 +27,17 @@ export class Proveedor extends Persona{
             }
         this.insumos = insumos;
     }
+
+    // Muestra un listado de las proveedores cargados
+    public static mostrarListado(proveedores: Proveedor[]): void{
+        if (proveedores.length > 0) {
+            proveedores.forEach((proveedor) => {
+                console.log(
+                    `\tID: ${proveedor.getID()} - Nombre: ${proveedor.getNombre()} - Insumos: [${proveedor.getInsumos()}]`
+                );
+            });
+        }else{
+            console.warn("\tNo hay registros."); // Si no hay entidades, informa al usuario
+        }
+    }
 }

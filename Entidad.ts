@@ -63,7 +63,7 @@ export class Entidad implements IEntidad {
 		return new Entidad(Entidad.generarUID(entidades), nombre);
 	}
 
-    // Muestra un listado de las veterinarias cargadas
+    // Muestra un listado de las entidades cargadas
     public static mostrarListado(entidades: Entidad[]): void{
         if (entidades.length > 0) {
             entidades.forEach((entidad) => {
