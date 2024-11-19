@@ -81,45 +81,6 @@ export class Red {
 		return provedor;
 	}
 
-	public darDeBajaVeterinaria(): void {
-		// Solicita el nombre de la veterinaria que se desea eliminar
-		let nombre: string = rls.question(
-			"Ingrese el nombre de la Veterinaria que desea eliminar: "
-		);
-
-		// Busca el indice de la veterinaria en el array mediante su nombre
-		let index = this.veterinarias.findIndex(
-			(veterinaria) => veterinaria.getNombre() === nombre
-		);
-
-		// Si se encuentra la Veterinaria
-		if (index !== -1) {
-			// Elimina la veterinaria del array
-			this.veterinarias.splice(index, 1);
-			console.log(`Veterinaria eliminada correctamente`);
-		} else {
-			// Si no se encuentra la veterinaria con ese nombre
-			console.log("No se encontró una Veterinaria con ese nombre");
-		}
-	}
-
-	public darDeBajaProveedor(): void {
-		let nombre: string = rls.question(
-			"Ingrese el nombre del Proveedor que desea eliminar: "
-		);
-
-		let indice = this.proveedores.findIndex(
-			(proveedor) => proveedor.getNombre() === nombre
-		);
-
-		if (indice !== -1) {
-			this.proveedores.splice(indice, 1);
-			console.log("Proveedor eliminado correctamente");
-		} else {
-			console.log("No se encontró un Proveedor con ese nombre");
-		}
-	}
-
 	// Modifica una Veterinaria
 	public modificarVeterinaria(): void {
 		if (this.veterinarias.length==0){
@@ -225,7 +186,7 @@ export class Red {
         let opcion: number = -1;
         while (opcion!==2){
             console.clear();  
-            console.info(`Bienvenidos a la red de veterinarias '${this.getNombre()}'\t`);
+            console.info(`Bienvenidos a la red de veterinarias ${this.getNombre()}`);
             opcion = rls.keyInSelect(['VETERINARIAS', 'PROVEEDORES', 'SALIR'], 'Opción: ', {guide:false, cancel: false});
             try{    
                 switch(opcion){
@@ -269,14 +230,13 @@ export class Red {
             console.clear()
             console.log('PROVEEDORES');
             Entidad.mostrarListado(this.proveedores); 
-            opcion = rls.keyInSelect(['AGREGAR', 'MODIFICAR', 'ELIMINAR', 'SELECCIONAR', 'VOLVER'], 'Opción: ', {caseSensitive:true, guide:false, cancel: false});
+            opcion = rls.keyInSelect(['AGREGAR', 'MODIFICAR', 'ELIMINAR', 'VOLVER'], 'Opción: ', {caseSensitive:true, guide:false, cancel: false});
             try{    
                 switch(opcion){
                     case 0: this.darDeAltaProovedor(); break;
                     case 1: this.modificarProveedor(); break;
                     case 2: Entidad.darDeBajaEntidad(this.proveedores); break;
-                    case 3: //(Entidad.obtenerEntidad(this.proveedores) as Proveedor).mostrarMenu(); break;
-                }                
+2                }                
             }catch(error){
                 console.error(`${(error as Error).name}: ${(error as Error).message}`);
                 rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});

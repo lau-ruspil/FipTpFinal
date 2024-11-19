@@ -148,7 +148,7 @@ export class Veterinaria extends Persona {
         let opcion: number = -1;
         while (opcion!==2){
             console.clear();  
-            console.info(`Bienvenidos a la veterinaria '${this.getNombre()}'\t`);
+            console.info(`Bienvenidos a la veterinaria ${this.getNombre()}`);
             opcion = rls.keyInSelect(['CLIENTES', 'PACIENTES', 'VOLVER'], 'Opción: ', {caseSensitive:true, guide:false, cancel: false});
             try{    
                 switch(opcion){
