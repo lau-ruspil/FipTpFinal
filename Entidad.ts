@@ -62,4 +62,52 @@ export class Entidad implements IEntidad {
 		let nombre: string = rls.question("Nombre: ");
 		return new Entidad(Entidad.generarUID(entidades), nombre);
 	}
+
+    // Muestra un listado de las veterinarias cargadas
+    public static mostrarListado(entidades: Entidad[]): void{
+        if (entidades.length > 0) {
+            entidades.forEach((entidad) => {
+                console.log(
+                    `\tID: ${entidad.getID()} - Nombre: ${entidad.getNombre()}`
+                );
+            });
+        }else{
+            console.warn("\tNo hay registros."); // Si no hay entidades, informa al usuario
+        }
+    }
+    
+    // Elimina una entidad
+    public static darDeBajaEntidad(entidades: Entidad[]): void {
+		// Solicita el nombre de la entidad a eliminar
+		let id : number = rls.questionInt(`Ingrese el ID a eliminar: `);
+        const index: number  = entidades.findIndex(entidad => entidad.getID() == id)
+
+		// Si se encuentra la Entidad
+		if (index !== -1) {
+			// Elimina la entidad
+			entidades.splice(index, 1)
+			console.info(`Eliminada correctamente.`);
+            rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
+		} else {
+			// Si no se encuentra la entidad informa al usuario
+			console.error(`Registro no encontrado.`);
+            rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
+		}
+	}
+
+    // Retorna una Entidad dada su ID
+    public static obtenerEntidad(entidades: Entidad[]): Entidad|undefined {
+		// Solicita el nombre de la entidad a eliminar
+		let id : number = rls.questionInt(`Ingrese el ID a seleccionar: `);
+        const index: number  = entidades.findIndex(entidad => entidad.getID() == id)
+
+		// Si se encuentra la Entidad
+		if (index !== -1) {
+			return entidades[index];
+		} else {
+			// Si no se encuentra la entidad informa al usuario
+			console.error(`Registro no encontrado.`);
+            rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
+		}
+	}
 }

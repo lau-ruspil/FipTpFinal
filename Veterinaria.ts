@@ -1,3 +1,4 @@
+import { Entidad } from "./Entidad";
 import { Persona } from "./Persona";
 import { Cliente } from "./Cliente";
 import { Paciente } from "./Paciente";
@@ -46,40 +47,10 @@ export class Veterinaria extends Persona {
 		}
 
 		// Inicializar la variable para la especie
-		let especie: string;
-
-		// Bucle para asegurar que se seleccione una especie válida
-		while (true) {
-			// Mostrar opciones para la especie
-			console.log("Seleccione la especie del paciente:");
-			console.log("1. Gato");
-			console.log("2. Perro");
-			console.log("3. Exótico");
-
-			// Obtener la opción seleccionada por el usuario
-			let opcion: number = rls.questionInt("Elige una opción: ");
-
-			// Asignar la especie según la opción seleccionada
-			switch (opcion) {
-				case 1:
-					especie = "Gato";
-					break;
-				case 2:
-					especie = "Perro";
-					break;
-				case 3:
-					especie = "Exótico";
-					break;
-				default:
-					console.log(
-						"Opción no válida. Por favor, elija una opción válida."
-					);
-					continue; // Volver a preguntar si la opción no es válida
-			}
-			// Si la especie es válida, salir del bucle
-			break;
-		}
-
+		const opciones : string[] = ['Gato','Perro','Exótico'];
+		let index : number = rls.keyInSelect(opciones, 'Opción: ', {guide:false, cancel: false});
+		let especie: string = opciones[index];
+		
 		// Crear el nuevo paciente con la especie seleccionada
 		let paciente = new Paciente(
 			nuevaEntidad.getID(),
@@ -171,4 +142,68 @@ export class Veterinaria extends Persona {
 
 		console.log("Cliente modificado exitosamente");
 	}
+
+    // Muestra el Menu Principal de la RED
+    public mostrarMenu(): void{
+        let opcion: number = -1;
+        while (opcion!==2){
+            console.clear();  
+            console.info(`Bienvenidos a la veterinaria '${this.getNombre()}'\t`);
+            opcion = rls.keyInSelect(['CLIENTES', 'PACIENTES', 'VOLVER'], 'Opción: ', {caseSensitive:true, guide:false, cancel: false});
+            try{    
+                switch(opcion){
+                    case 0: this.mostrarSubMenuClientes(); break;
+                    case 1: this.mostrarSubMenuPacientes(); break;
+                    case 2: break;
+                }
+            }catch(error){
+                console.error(`${(error as Error).name}: ${(error as Error).message}`);
+                rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
+            }
+        }
+    }
+
+    // SUBMENU CLIENTES
+    private mostrarSubMenuClientes(): void{        
+        let opcion: number = -1;
+        while (opcion!==4){
+            console.clear()
+            console.log('CLIENTES');
+            Entidad.mostrarListado(this.clientes); 
+            opcion = rls.keyInSelect(['AGREGAR', 'MODIFICAR', 'ELIMINAR', 'SELECCIONAR', 'VOLVER'], 'Opción: ', {caseSensitive:true, guide:false, cancel: false});
+            try{    
+                switch(opcion){
+                    case 0: this.darDeAltaCliente(); break;
+                    case 1: this.modificarCliente(); break;
+                    case 2: Entidad.darDeBajaEntidad(this.clientes); break;
+                    //case 3: this.clientes.mostrarMenu();
+                }
+            }catch(error){
+                console.error(`${(error as Error).name}: ${(error as Error).message}`);
+                rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
+            }
+        }
+    }
+
+    // SUBMENU PACIENTES
+    private mostrarSubMenuPacientes(): void{        
+        let opcion: number = -1;
+        while (opcion!==4){
+            console.clear()
+            console.log('PACIENTES');
+            Entidad.mostrarListado(this.pacientes); 
+            opcion = rls.keyInSelect(['AGREGAR', 'MODIFICAR', 'ELIMINAR', 'SELECCIONAR', 'VOLVER'], 'Opción: ', {caseSensitive:true, guide:false, cancel: false});
+            try{    
+                switch(opcion){
+                    case 0: this.darDeAltaPaciente(); break;
+                    case 1: //this.modificarPaciente(); break;
+                    case 2: Entidad.darDeBajaEntidad(this.pacientes); break;
+                    //case 3: this.proveedores.mostrarMenu();
+                }
+            }catch(error){
+                console.error(`${(error as Error).name}: ${(error as Error).message}`);
+                rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
+            }
+        }
+    }
 }

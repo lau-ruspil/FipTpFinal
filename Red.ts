@@ -1,3 +1,4 @@
+import { Entidad } from "./Entidad";
 import { Persona } from "./Persona";
 import { Veterinaria } from "./Veterinaria";
 import { Proveedor } from "./Proveedor";
@@ -208,4 +209,99 @@ export class Red {
 			console.log("No se encontró ningún Proveedor con ese nombre");
 		}
 	}
+
+    // Muestra el Menu Principal de la RED
+    public mostrarMenu(): void{
+        let opcion: number = -1;
+        while (opcion!==2){
+            console.clear();  
+            console.info(`Bienvenidos a la red de veterinarias '${this.getNombre()}'\t`);
+            opcion = rls.keyInSelect(['VETERINARIAS', 'PROVEEDORES', 'SALIR'], 'Opción: ', {guide:false, cancel: false});
+            try{    
+                switch(opcion){
+                    case 0: this.mostrarSubMenuVeterinarias(); break;
+                    case 1: this.mostrarSubMenuProveedores(); break;
+                    case 2: break;
+                }
+            }catch(error){
+                console.error(`${(error as Error).name}: ${(error as Error).message}`);
+                rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
+            }
+        }
+    }
+    
+    // SUBMENU VETERINARIAS
+    private mostrarSubMenuVeterinarias(): void{        
+        let opcion: number = -1;
+        while (opcion!==4){
+            console.clear()
+            console.log('VETERINARIAS');
+            Entidad.mostrarListado(this.veterinarias); 
+            opcion = rls.keyInSelect(['AGREGAR', 'MODIFICAR', 'ELIMINAR', 'SELECCIONAR', 'VOLVER'], 'Opción: ', {guide:false, cancel: false});
+            try{    
+                switch(opcion){
+                    case 0: this.darDeAltaVeterinaria(); break;					
+                    case 1: if (this.veterinarias.length==0){
+								console.warn(`No hay registros cargados.`)
+							}else{
+								this.modificarVeterinaria(); 
+							}					
+							break;
+                    case 2: if (this.veterinarias.length==0){
+								console.warn(`No hay registros cargados.`)
+							}else{
+								Entidad.darDeBajaEntidad(this.veterinarias);
+							}
+							break;
+                    case 3: if (this.veterinarias.length==0){
+								console.warn(`No hay registros cargados.`)
+							}else{
+                                (Entidad.obtenerEntidad(this.veterinarias) as Veterinaria)?.mostrarMenu();                                
+                    		}
+							break;
+                }
+            }catch(error){
+                console.error(`${(error as Error).name}: ${(error as Error).message}`);
+                rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
+            }
+        }
+    }
+
+    // SUBMENU PROVEEDORES
+    private mostrarSubMenuProveedores(): void{        
+        let opcion: number = -1;
+        while (opcion!==4){
+            console.clear()
+            console.log('PROVEEDORES');
+            Entidad.mostrarListado(this.proveedores); 
+            opcion = rls.keyInSelect(['AGREGAR', 'MODIFICAR', 'ELIMINAR', 'SELECCIONAR', 'VOLVER'], 'Opción: ', {caseSensitive:true, guide:false, cancel: false});
+            try{    
+                switch(opcion){
+                    case 0: this.darDeAltaProovedor(); break;
+                    case 1: if (this.proveedores.length==0){
+								console.warn(`No hay registros cargados.`)
+							}else{
+								this.modificarProveedor(); 
+							}
+							break;
+                    case 2: if (this.proveedores.length==0){
+								console.warn(`No hay registros cargados.`)
+							}else{
+								Entidad.darDeBajaEntidad(this.proveedores); 
+							}
+							break;
+                    case 3: if (this.proveedores.length==0){
+								console.warn(`No hay registros cargados.`)
+							}else{
+                                //(Entidad.obtenerEntidad(this.proveedores) as Proveedor).mostrarMenu();
+							}
+                            break;
+
+                }                
+            }catch(error){
+                console.error(`${(error as Error).name}: ${(error as Error).message}`);
+                rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
+            }
+        }
+    }
 }
