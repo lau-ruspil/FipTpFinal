@@ -51,11 +51,8 @@ export class Red {
 		return veterinaria;
 	}
 
-	//Crea un nuevo proveedor
-	public darDeAltaProovedor(): Proveedor | undefined {
-		console.log("Ingrese los datos del Proveedor:");
-		let nuevaPersona: Persona = Persona.altaPersona(this.proveedores);
-
+	// Solicita un arreglo de insumos
+	private solicitarInsumos(): string[]{
 		//Solicito los insumos
 		let insumos: string[] = [];
 		let finalizar: boolean = false;
@@ -68,6 +65,15 @@ export class Red {
 				finalizar = true;
 			}
 		}
+		return insumos;
+	}
+
+	//Crea un nuevo proveedor
+	public darDeAltaProovedor(): Proveedor | undefined {
+		console.log("Ingrese los datos del Proveedor:");
+		let nuevaPersona: Persona = Persona.altaPersona(this.proveedores);
+
+		let insumos: string[] = this.solicitarInsumos();
 
 		//Creo el provedor
 		let provedor: Proveedor = new Proveedor(
@@ -87,20 +93,11 @@ export class Red {
 			console.warn(`No hay registros cargados.`);
 			return;
 		}
-		// Solicitar el nombre de la veterinara a modificar
-		let nombre: string = rls.question(
-			"Ingrese el nombre de la Veterinaria que desea modificar: "
-		);
 
-		// Buscar la veterinaria por el nombre en el arreglo de veterinarias
-		let indice = this.veterinarias.findIndex(
-			(vet) => vet.getNombre() === nombre
-		);
-
+		const veterinaria = (Entidad.obtenerEntidad(this.veterinarias) as Veterinaria);
+		
 		// Si se encontro la veterinaria
-		if (indice !== -1) {
-			// obtener la veterinaria utilizando el indice
-			let veterinaria = this.veterinarias[indice];
+		if (veterinaria !== undefined) {
 
 			// Solicitar al usuario los nuevos datos de la veterinaria
 			let nuevoNombre = rls.question(
@@ -128,9 +125,9 @@ export class Red {
 				veterinaria.setTelefono(nuevoTelefono);
 			}
 
-			console.log("Veterinaria modificada correctamente");
+			console.info("Veterinaria modificada correctamente");
 		} else {
-			console.log("No se encontró ninguna Veterinaria con ese nombre");
+			console.error("No se encontró ninguna Veterinaria con ese nombre");
 		}
 	}
 
@@ -140,16 +137,10 @@ export class Red {
 			console.warn(`No hay registros cargados.`);
 			return;
 		}
-		let nombre: string = rls.question(
-			"Ingrese el nombre del Proveedor que desea modificar: "
-		);
 
-		let indice = this.proveedores.findIndex(
-			(proveedor) => proveedor.getNombre() === nombre
-		);
+		const proveedor = (Entidad.obtenerEntidad(this.proveedores) as Proveedor);
 
-		if (indice !== -1) {
-			let proveedor = this.proveedores[indice];
+		if (proveedor !== undefined) {
 
 			let nuevoNombre = rls.question(
 				"Ingrese el nuevo nombre (ENTER para mantener el actual)"
@@ -163,6 +154,8 @@ export class Red {
 				"Ingrese el nuevo teléfono (ENTER para mantener el actual)"
 			);
 
+			let insumos: string[] = this.solicitarInsumos();
+
 			if (nuevoNombre) {
 				proveedor.setNombre(nuevoNombre);
 			}
@@ -175,9 +168,13 @@ export class Red {
 				proveedor.setTelefono(nuevoTelefono);
 			}
 
-			console.log("Proveedor actualizado correctamente");
+			if (insumos.length>0){
+				proveedor.setInsumos(insumos);
+			}
+
+			console.info("Proveedor actualizado correctamente.");
 		} else {
-			console.log("No se encontró ningún Proveedor con ese nombre");
+			console.error("No se encontró ningún Proveedor con ese nombre.");
 		}
 	}
 
@@ -187,6 +184,10 @@ export class Red {
         while (opcion!==2){
             console.clear();  
             console.info(`Bienvenidos a la red de veterinarias ${this.getNombre()}`);
+            console.log('VETERINARIAS');
+            Entidad.mostrarListado(this.veterinarias); 
+			console.log('PROVEEDORES');
+            Entidad.mostrarListado(this.proveedores); 
             opcion = rls.keyInSelect(['VETERINARIAS', 'PROVEEDORES', 'SALIR'], 'Opción: ', {guide:false, cancel: false});
             try{    
                 switch(opcion){
@@ -226,7 +227,7 @@ export class Red {
     // SUBMENU PROVEEDORES
     private mostrarSubMenuProveedores(): void{        
         let opcion: number = -1;
-        while (opcion!==4){
+        while (opcion!==3){
             console.clear()
             console.log('PROVEEDORES');
             Entidad.mostrarListado(this.proveedores); 
@@ -236,7 +237,7 @@ export class Red {
                     case 0: this.darDeAltaProovedor(); break;
                     case 1: this.modificarProveedor(); break;
                     case 2: Entidad.darDeBajaEntidad(this.proveedores); break;
-2                }                
+                }                
             }catch(error){
                 console.error(`${(error as Error).name}: ${(error as Error).message}`);
                 rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
