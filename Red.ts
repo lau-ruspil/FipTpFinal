@@ -52,7 +52,7 @@ export class Red {
 	}
 
 	// Solicita un arreglo de insumos
-	private solicitarInsumos(): string[]{
+	private solicitarInsumos(): string[] {
 		//Solicito los insumos
 		let insumos: string[] = [];
 		let finalizar: boolean = false;
@@ -89,16 +89,20 @@ export class Red {
 
 	// Modifica una Veterinaria
 	public modificarVeterinaria(): void {
-		if (this.veterinarias.length==0){
+		if (this.veterinarias.length == 0) {
 			console.warn(`No hay registros cargados.`);
+			rls.keyInPause("Presione una tecla para continuar...", {
+				guide: false,
+			});
 			return;
 		}
 
-		const veterinaria = (Entidad.obtenerEntidad(this.veterinarias) as Veterinaria);
-		
+		const veterinaria = Entidad.obtenerEntidad(
+			this.veterinarias
+		) as Veterinaria;
+
 		// Si se encontro la veterinaria
 		if (veterinaria !== undefined) {
-
 			// Solicitar al usuario los nuevos datos de la veterinaria
 			let nuevoNombre = rls.question(
 				"Ingrese el nuevo nombre (ENTER para mantener el actual)"
@@ -133,15 +137,17 @@ export class Red {
 
 	// Modifica un proveedor
 	public modificarProveedor(): void {
-		if (this.proveedores.length==0){
+		if (this.proveedores.length == 0) {
 			console.warn(`No hay registros cargados.`);
+			rls.keyInPause(`Presione una tecla para continuar...`, {
+				guide: false,
+			});
 			return;
 		}
 
-		const proveedor = (Entidad.obtenerEntidad(this.proveedores) as Proveedor);
+		const proveedor = Entidad.obtenerEntidad(this.proveedores) as Proveedor;
 
 		if (proveedor !== undefined) {
-
 			let nuevoNombre = rls.question(
 				"Ingrese el nuevo nombre (ENTER para mantener el actual)"
 			);
@@ -168,7 +174,7 @@ export class Red {
 				proveedor.setTelefono(nuevoTelefono);
 			}
 
-			if (insumos.length>0){
+			if (insumos.length > 0) {
 				proveedor.setInsumos(insumos);
 			}
 
@@ -178,70 +184,121 @@ export class Red {
 		}
 	}
 
-    // Muestra el Menu Principal de la RED
-    public mostrarMenu(): void{
-        let opcion: number = -1;
-        while (opcion!==2){
-            console.clear();  
-            console.info(`Bienvenidos a la red de veterinarias ${this.getNombre()}`);
-            console.log('VETERINARIAS');
-            Entidad.mostrarListado(this.veterinarias); 
-			console.log('PROVEEDORES');
-            Entidad.mostrarListado(this.proveedores); 
-            opcion = rls.keyInSelect(['VETERINARIAS', 'PROVEEDORES', 'SALIR'], 'Opción: ', {guide:false, cancel: false});
-            try{    
-                switch(opcion){
-                    case 0: this.mostrarSubMenuVeterinarias(); break;
-                    case 1: this.mostrarSubMenuProveedores(); break;
-                    case 2: break;
-                }
-            }catch(error){
-                console.error(`${(error as Error).name}: ${(error as Error).message}`);
-                rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
-            }
-        }
-    }
-    
-    // SUBMENU VETERINARIAS
-    private mostrarSubMenuVeterinarias(): void{        
-        let opcion: number = -1;
-        while (opcion!==4){
-            console.clear()
-            console.log('VETERINARIAS');
-            Entidad.mostrarListado(this.veterinarias); 
-            opcion = rls.keyInSelect(['AGREGAR', 'MODIFICAR', 'ELIMINAR', 'SELECCIONAR', 'VOLVER'], 'Opción: ', {guide:false, cancel: false});
-            try{    
-                switch(opcion){
-                    case 0: this.darDeAltaVeterinaria(); break;					
-                    case 1: this.modificarVeterinaria(); break;
-                    case 2: Entidad.darDeBajaEntidad(this.veterinarias); break;
-                    case 3:(Entidad.obtenerEntidad(this.veterinarias) as Veterinaria)?.mostrarMenu(); break;
-                }
-            }catch(error){
-                console.error(`${(error as Error).name}: ${(error as Error).message}`);
-                rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
-            }
-        }
-    }
+	// Muestra el Menu Principal de la RED
+	public mostrarMenu(): void {
+		let opcion: number = -1;
+		while (opcion !== 2) {
+			console.clear();
+			console.info(
+				`Bienvenidos a la red de veterinarias ${this.getNombre()}`
+			);
+			console.log("VETERINARIAS");
+			Entidad.mostrarListado(this.veterinarias);
+			console.log("PROVEEDORES");
+			Entidad.mostrarListado(this.proveedores);
+			// Devuelve indices empezando desde el 0
+			opcion = rls.keyInSelect(
+				["VETERINARIAS", "PROVEEDORES", "SALIR"],
+				"Opción: ",
+				{ guide: false, cancel: false }
+			);
+			try {
+				switch (opcion) {
+					case 0:
+						this.mostrarSubMenuVeterinarias();
+						break;
+					case 1:
+						this.mostrarSubMenuProveedores();
+						break;
+					case 2:
+						break;
+				}
+			} catch (error) {
+				console.error(
+					`${(error as Error).name}: ${(error as Error).message}`
+				);
+				// Hace que el programa deje la posibilidad de seguir si se ingresan valores incorrectos, de lo contrario el programa no se sigue ejecutando
+				rls.keyInPause(`Presione una tecla para continuar...`, {
+					guide: false,
+				});
+			}
+		}
+	}
 
-    // SUBMENU PROVEEDORES
-    private mostrarSubMenuProveedores(): void{        
-        let opcion: number = -1;
-        while (opcion!==3){
-            console.clear()
-            console.log('PROVEEDORES');
-            Proveedor.mostrarListado(this.proveedores); 
-            opcion = rls.keyInSelect(['AGREGAR', 'MODIFICAR', 'ELIMINAR', 'VOLVER'], 'Opción: ', {caseSensitive:true, guide:false, cancel: false});
-            try{    
-                switch(opcion){
-                    case 0: this.darDeAltaProovedor(); break;
-                    case 1: this.modificarProveedor(); break;
-                    case 2: Entidad.darDeBajaEntidad(this.proveedores); break;
-                }                
-            }catch(error){
-                console.error(`${(error as Error).name}: ${(error as Error).message}`);
-                rls.keyInPause(`Presione una tecla para continuar...`, {guide:false});
-            }
-        }
-    }
+	// SUBMENU VETERINARIAS
+	public mostrarSubMenuVeterinarias(): void {
+		let opcion: number = -1;
+		while (opcion !== 4) {
+			console.clear();
+			console.log("VETERINARIAS");
+			Entidad.mostrarListado(this.veterinarias);
+			opcion = rls.keyInSelect(
+				["AGREGAR", "MODIFICAR", "ELIMINAR", "SELECCIONAR", "VOLVER"],
+				"Opción: ",
+				{ guide: false, cancel: false }
+			);
+			try {
+				switch (opcion) {
+					case 0:
+						this.darDeAltaVeterinaria();
+						break;
+					case 1:
+						this.modificarVeterinaria();
+						break;
+					case 2:
+						Entidad.darDeBajaEntidad(this.veterinarias);
+						break;
+					case 3:
+						(
+							Entidad.obtenerEntidad(
+								this.veterinarias
+							) as Veterinaria
+						)?.mostrarMenu();
+						break;
+				}
+			} catch (error) {
+				console.error(
+					`${(error as Error).name}: ${(error as Error).message}`
+				);
+				rls.keyInPause(`Presione una tecla para continuar...`, {
+					guide: false,
+				});
+			}
+		}
+	}
+
+	// SUBMENU PROVEEDORES
+	private mostrarSubMenuProveedores(): void {
+		let opcion: number = -1;
+		while (opcion !== 3) {
+			console.clear();
+			console.log("PROVEEDORES");
+			Proveedor.mostrarListado(this.proveedores);
+			opcion = rls.keyInSelect(
+				["AGREGAR", "MODIFICAR", "ELIMINAR", "VOLVER"],
+				"Opción: ",
+				{ caseSensitive: true, guide: false, cancel: false }
+			);
+			try {
+				switch (opcion) {
+					case 0:
+						this.darDeAltaProovedor();
+						break;
+					case 1:
+						this.modificarProveedor();
+						break;
+					case 2:
+						Entidad.darDeBajaEntidad(this.proveedores);
+						break;
+				}
+			} catch (error) {
+				console.error(
+					`${(error as Error).name}: ${(error as Error).message}`
+				);
+				rls.keyInPause(`Presione una tecla para continuar...`, {
+					guide: false,
+				});
+			}
+		}
+	}
 }
