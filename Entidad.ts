@@ -1,5 +1,4 @@
 // Interfaz 'IEntidad' para definir la estructura de una entidad
-import { parse } from "path";
 import { IEntidad } from "./IEntidad";
 
 import * as rls from "readline-sync"; // Para entrada de datos en consola
