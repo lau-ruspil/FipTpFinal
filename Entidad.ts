@@ -15,34 +15,7 @@ export class Entidad implements IEntidad {
 	constructor(id: number, nombre: string) {
 		// Validar si el id es indefinido o es menor a un caracter
 		if (id == undefined || id < 1) throw Error(`ID inválido (id: ${id}`);
-
-		// Validar que el nombre no este vacío
-		if (!nombre) {
-			throw new Error(`Nombre inválido: El nombre no puede estar vacío.`);
-		}
-
-		// Validar si el nombre no es una cadena
-		if (typeof nombre !== "string") {
-			throw new Error(
-				`${nombre} Nombre inválido: El nombre debe ser una cadena de texto.`
-			);
-		}
-
-		// Verificar si el nombre tiene números
-		if (nombre.match(/\d/)) {
-			//busca cualquier numero en el nombre
-			throw new Error(
-				`${nombre} Nombre inválido: El nombre no puede ser un número o contener números.`
-			);
-		}
-
-		// Validar si el nombre tiene menos de 3 caracteres
-		if (nombre.length < 3) {
-			throw new Error(
-				`${nombre} Nombre inválido: El nombre  debe tener al menos 3 caracteres.`
-			);
-		}
-
+		
 		this.id = id;
 		this.setNombre(nombre);
 	}
@@ -59,9 +32,19 @@ export class Entidad implements IEntidad {
 
 	// Establece el nombre de la entidad
 	public setNombre(nombre: string): void {
-		if (nombre == undefined || nombre.length < 1) {
+		
+		//Valida que no se pase un string indefinido
+		if (nombre == undefined) {
 			throw Error(`Nombre inválido (nombre: '${nombre}')`);
 		}
+
+		// Validar si el nombre tiene menos de 3 caracteres
+		if (nombre.length < 3) {
+			throw new Error(
+				`Nombre inválido: El nombre  debe tener al menos 3 caracteres. (Nombre: '${nombre}')`
+			);
+		}
+
 		this.nombre = nombre;
 	}
 
