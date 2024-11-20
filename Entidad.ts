@@ -15,7 +15,7 @@ export class Entidad implements IEntidad {
 	constructor(id: number, nombre: string) {
 		// Validar si el id es indefinido o es menor a un caracter
 		if (id == undefined || id < 1) throw Error(`ID inválido (id: ${id}`);
-		
+
 		this.id = id;
 		this.setNombre(nombre);
 	}
@@ -32,7 +32,6 @@ export class Entidad implements IEntidad {
 
 	// Establece el nombre de la entidad
 	public setNombre(nombre: string): void {
-		
 		//Valida que no se pase un string indefinido
 		if (nombre == undefined) {
 			throw Error(`Nombre inválido (nombre: '${nombre}')`);
@@ -108,13 +107,13 @@ export class Entidad implements IEntidad {
 		if (index !== -1) {
 			// Elimina la entidad
 			entidades.splice(index, 1);
-			console.info(`Eliminada correctamente.`);
+			console.info(`Eliminado/a correctamente.`);
 			rls.keyInPause(`Presione una tecla para continuar...`, {
 				guide: false,
 			});
 		} else {
 			// Si no se encuentra la entidad informa al usuario
-			console.error(`Registro no encontrado.`);
+			console.warn(`Registro no encontrado.`);
 			rls.keyInPause(`Presione una tecla para continuar...`, {
 				guide: false,
 			});

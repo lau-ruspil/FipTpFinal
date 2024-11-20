@@ -89,7 +89,7 @@ export class Red {
 
 	// Modifica una Veterinaria
 	public modificarVeterinaria(): void {
-		if (this.veterinarias.length == 0) {
+		if (this.veterinarias.length === 0) {
 			console.warn(`No hay registros cargados.`);
 			rls.keyInPause("Presione una tecla para continuar...", {
 				guide: false,
@@ -97,42 +97,44 @@ export class Red {
 			return;
 		}
 
+		// Obtener la veterinaria
 		const veterinaria = Entidad.obtenerEntidad(
 			this.veterinarias
 		) as Veterinaria;
 
-		// Si se encontro la veterinaria
-		if (veterinaria !== undefined) {
-			// Solicitar al usuario los nuevos datos de la veterinaria
-			let nuevoNombre = rls.question(
-				"Ingrese el nuevo nombre (ENTER para mantener el actual)"
-			);
+		// Si no se encuentra la veterinaria, se ha manejado el error dentro de obtenerEntidad
+		if (!veterinaria) return; // Solo regresamos si la veterinaria no fue encontrada
 
-			let nuevaDireccion = rls.question(
-				"Ingrese la nueva dirección (ENTER para mantener la actual)"
-			);
+		// Solicitar los nuevos datos de la veterinaria
+		let nuevoNombre = rls.question(
+			`Ingrese el nuevo nombre (Presione ENTER para mantener el actual): `
+		);
 
-			let nuevoTelefono = rls.question(
-				"Ingrese el nuevo teléfono (ENTER para mantener el actual)"
-			);
+		let nuevaDireccion = rls.question(
+			`Ingrese la nueva dirección (Presione ENTER para mantener la actual): `
+		);
 
-			// Si el usuario ha proporcionado todos los datos actualizamos,
-			if (nuevoNombre) {
-				veterinaria.setNombre(nuevoNombre);
-			}
+		let nuevoTelefono = rls.question(
+			`Ingrese el nuevo teléfono (Presione ENTER para mantener el actual): `
+		);
 
-			if (nuevaDireccion) {
-				veterinaria.setDireccion(nuevaDireccion);
-			}
-
-			if (nuevoTelefono) {
-				veterinaria.setTelefono(nuevoTelefono);
-			}
-
-			console.info("Veterinaria modificada correctamente");
-		} else {
-			console.error("No se encontró ninguna Veterinaria con ese nombre");
+		// Actualizar los datos solo si se proporcionan nuevos valores
+		if (nuevoNombre) {
+			veterinaria.setNombre(nuevoNombre);
 		}
+
+		if (nuevaDireccion) {
+			veterinaria.setDireccion(nuevaDireccion);
+		}
+
+		if (nuevoTelefono) {
+			veterinaria.setTelefono(nuevoTelefono);
+		}
+
+		console.info("Veterinaria modificada correctamente.");
+		rls.keyInPause(`Presione una tecla para continuar...`, {
+			guide: false,
+		});
 	}
 
 	// Modifica un proveedor
@@ -149,15 +151,15 @@ export class Red {
 
 		if (proveedor !== undefined) {
 			let nuevoNombre = rls.question(
-				"Ingrese el nuevo nombre (ENTER para mantener el actual)"
+				"Ingrese el nuevo nombre (ENTER para mantener el actual): "
 			);
 
 			let nuevaDireccion = rls.question(
-				"Ingrese la nueva dirección (ENTER para mantener la actual)"
+				"Ingrese la nueva dirección (ENTER para mantener la actual): "
 			);
 
 			let nuevoTelefono = rls.question(
-				"Ingrese el nuevo teléfono (ENTER para mantener el actual)"
+				"Ingrese el nuevo teléfono (ENTER para mantener el actual): "
 			);
 
 			let insumos: string[] = this.solicitarInsumos();
@@ -179,8 +181,14 @@ export class Red {
 			}
 
 			console.info("Proveedor actualizado correctamente.");
+			rls.keyInPause(`Presione una tecla para continuar...`, {
+				guide: false,
+			});
 		} else {
 			console.error("No se encontró ningún Proveedor con ese nombre.");
+			rls.keyInPause(`Presione una tecla para continuar...`, {
+				guide: false,
+			});
 		}
 	}
 
@@ -189,13 +197,18 @@ export class Red {
 		let opcion: number = -1;
 		while (opcion !== 2) {
 			console.clear();
+			console.log("────────────────────────────────────────");
 			console.info(
 				`Bienvenidos a la red de veterinarias ${this.getNombre()}`
 			);
+			console.log("────────────────────────────────────────");
 			console.log("VETERINARIAS");
+
 			Entidad.mostrarListado(this.veterinarias);
+			console.log("────────────────────────────────────────");
 			console.log("PROVEEDORES");
 			Entidad.mostrarListado(this.proveedores);
+			console.log("────────────────────────────────────────");
 			// Devuelve indices empezando desde el 0
 			opcion = rls.keyInSelect(
 				["VETERINARIAS", "PROVEEDORES", "SALIR"],
@@ -230,10 +243,18 @@ export class Red {
 		let opcion: number = -1;
 		while (opcion !== 4) {
 			console.clear();
+			console.log("────────────────────────────────────────");
 			console.log("VETERINARIAS");
 			Entidad.mostrarListado(this.veterinarias);
+			console.log("────────────────────────────────────────");
 			opcion = rls.keyInSelect(
-				["AGREGAR", "MODIFICAR", "ELIMINAR", "SELECCIONAR", "VOLVER"],
+				[
+					"AGREGAR VETERINARIA",
+					"SELECCIONAR VETERINARIA",
+					"MODIFICAR VETERINARIA",
+					"ELIMINAR VETERINARIA",
+					"VOLVER",
+				],
 				"Opción: ",
 				{ guide: false, cancel: false }
 			);
@@ -243,17 +264,17 @@ export class Red {
 						this.darDeAltaVeterinaria();
 						break;
 					case 1:
-						this.modificarVeterinaria();
-						break;
-					case 2:
-						Entidad.darDeBajaEntidad(this.veterinarias);
-						break;
-					case 3:
 						(
 							Entidad.obtenerEntidad(
 								this.veterinarias
 							) as Veterinaria
 						)?.mostrarMenu();
+						break;
+					case 2:
+						this.modificarVeterinaria();
+						break;
+					case 3:
+						Entidad.darDeBajaEntidad(this.veterinarias);
 						break;
 				}
 			} catch (error) {
@@ -272,12 +293,19 @@ export class Red {
 		let opcion: number = -1;
 		while (opcion !== 3) {
 			console.clear();
+			console.log("────────────────────────────────────────"); //
 			console.log("PROVEEDORES");
 			Proveedor.mostrarListado(this.proveedores);
+			console.log("────────────────────────────────────────"); //
 			opcion = rls.keyInSelect(
-				["AGREGAR", "MODIFICAR", "ELIMINAR", "VOLVER"],
+				[
+					"AGREGAR PROVEEDOR",
+					"MODIFICAR PROVEEDOR",
+					"ELIMINAR PROVEEDOR",
+					"VOLVER",
+				],
 				"Opción: ",
-				{ caseSensitive: true, guide: false, cancel: false }
+				{ guide: false, cancel: false }
 			);
 			try {
 				switch (opcion) {

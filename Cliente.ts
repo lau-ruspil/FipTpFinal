@@ -33,8 +33,7 @@ export class Cliente extends Persona {
 		}
 	}
 
-	// Establece el nombre del cliente. Extiende el método original de Entidad para 
-	// no permitir números
+	// Establece el nombre del cliente. Extiende el método original de Entidad para no permitir números
 	public setNombre(nombre: string): void {
 		super.setNombre(nombre);
 
