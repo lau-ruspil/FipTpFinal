@@ -27,7 +27,7 @@ export class Cliente extends Persona {
 
 	// Establece el número de visitas
 	public setVisitas(visitas: number): void {
-		if (!visitas == undefined && visitas > 0) {
+		if (visitas !== undefined && visitas > 0) {
 			// Valida que las visitas sean positivas
 			this.visitas = visitas;
 		}
@@ -45,4 +45,17 @@ export class Cliente extends Persona {
 			);
 		}
 	}
+
+    // Muestra un listado de las clientes cargados
+    public static mostrarListado(cliente: Cliente[]): void{
+        if (cliente.length > 0) {
+            cliente.forEach((cliente) => {
+                console.log(
+                    `\tID: ${cliente.getID()} - Nombre: ${cliente.getNombre()} - Dirección: ${cliente.getDireccion()} - Visitas: ${cliente.getVisitas()} - VIP: ${cliente.esVip()?'Si':'No'}`
+                );
+            });
+        }else{
+            console.warn("\tNo hay registros."); // Si no hay entidades, informa al usuario
+        }
+    }
 }

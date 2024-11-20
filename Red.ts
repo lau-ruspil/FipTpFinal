@@ -18,11 +18,6 @@ export class Red {
 		this.setNombre(nombre);
 	}
 
-	// Retorna las veterinarias
-	public getVeterinarias() {
-		return this.veterinarias;
-	}
-
 	// Retorna el nombre
 	public getNombre(): string {
 		return this.nombre;
@@ -38,16 +33,21 @@ export class Red {
 
 	// Da de alta una nueva Veterinaria
 	// Retorna -1 o el ID de la veterinaria generada si tuvo éxito
-	public darDeAltaVeterinaria(): Veterinaria | undefined {
-		console.log("Ingrese los datos de la Veterinaria:");
-		let persona = Persona.altaPersona(this.veterinarias);
-		let veterinaria = new Veterinaria(
-			persona.getID(),
-			persona.getNombre(),
-			persona.getDireccion(),
-			persona.getTelefono()
-		);
-		this.veterinarias.push(veterinaria);
+	public darDeAltaVeterinaria(veterinaria?: Veterinaria): Veterinaria | undefined {
+		//A modo de testeo tambien recibe una Veterinaria ya definida (precarga)		
+		if (veterinaria==undefined){
+			console.log("Ingrese los datos de la Veterinaria:");
+			let persona = Persona.altaPersona(this.veterinarias);		
+			let veterinaria = new Veterinaria(
+				persona.getID(),
+				persona.getNombre(),
+				persona.getDireccion(),
+				persona.getTelefono()
+			);		
+			this.veterinarias.push(veterinaria);
+		}else{
+			this.veterinarias.push(veterinaria);
+		}
 		return veterinaria;
 	}
 
@@ -69,22 +69,27 @@ export class Red {
 	}
 
 	//Crea un nuevo proveedor
-	public darDeAltaProovedor(): Proveedor | undefined {
-		console.log("Ingrese los datos del Proveedor:");
-		let nuevaPersona: Persona = Persona.altaPersona(this.proveedores);
+	public darDeAltaProovedor(proveedor?: Proveedor): Proveedor | undefined {
+		//A modo de testeo tambien recibe una Veterinaria ya definida (precarga)		
+		if (proveedor==undefined){
+			console.log("Ingrese los datos del Proveedor:");
+			let nuevaPersona: Persona = Persona.altaPersona(this.proveedores);
 
-		let insumos: string[] = this.solicitarInsumos();
+			let insumos: string[] = this.solicitarInsumos();
 
-		//Creo el provedor
-		let provedor: Proveedor = new Proveedor(
-			nuevaPersona.getID(),
-			nuevaPersona.getNombre(),
-			nuevaPersona.getDireccion(),
-			nuevaPersona.getTelefono(),
-			insumos
-		);
-		this.proveedores.push(provedor);
-		return provedor;
+			//Creo el provedor
+			let proveedor: Proveedor = new Proveedor(
+				nuevaPersona.getID(),
+				nuevaPersona.getNombre(),
+				nuevaPersona.getDireccion(),
+				nuevaPersona.getTelefono(),
+				insumos
+			);
+			this.proveedores.push(proveedor);
+		}else{
+			this.proveedores.push(proveedor);
+		}
+		return proveedor;
 	}
 
 	// Modifica una Veterinaria
@@ -204,10 +209,10 @@ export class Red {
 			console.log("────────────────────────────────────────");
 			console.log("VETERINARIAS");
 
-			Entidad.mostrarListado(this.veterinarias);
+			Veterinaria.mostrarListado(this.veterinarias);
 			console.log("────────────────────────────────────────");
 			console.log("PROVEEDORES");
-			Entidad.mostrarListado(this.proveedores);
+			Proveedor.mostrarListado(this.proveedores);
 			console.log("────────────────────────────────────────");
 			// Devuelve indices empezando desde el 0
 			opcion = rls.keyInSelect(
@@ -245,7 +250,7 @@ export class Red {
 			console.clear();
 			console.log("────────────────────────────────────────");
 			console.log("VETERINARIAS");
-			Entidad.mostrarListado(this.veterinarias);
+			Veterinaria.mostrarListado(this.veterinarias);
 			console.log("────────────────────────────────────────");
 			opcion = rls.keyInSelect(
 				[

@@ -1,7 +1,5 @@
 import { Persona } from "./Persona";
 
-import * as rls from 'readline-sync';
-
 // Clase Proveedor
 export class Proveedor extends Persona{
     private insumos: string[] = [];
@@ -33,7 +31,7 @@ export class Proveedor extends Persona{
         if (proveedores.length > 0) {
             proveedores.forEach((proveedor) => {
                 console.log(
-                    `\tID: ${proveedor.getID()} - Nombre: ${proveedor.getNombre()} - Insumos: [${proveedor.getInsumos()}]`
+                    `\tID: ${proveedor.getID()} - Nombre: ${proveedor.getNombre()} - Dirección: ${proveedor.getDireccion()} - Tel: ${proveedor.getTelefono()} - Insumos: [${proveedor.getInsumos()}]`
                 );
             });
         }else{

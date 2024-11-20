@@ -45,7 +45,7 @@ export class Paciente extends Entidad {
 	// Establece la especie del paciente
 	// especie: Debe ser una de las especies indicadas en el arreglo
 	public setEspecie(especie: string): void {
-		this.especie = especie.toLowerCase();
+		this.especie = especie;
 	}
 
 	// Establece el nombre del paciente. Extiende el método original de Entidad para no permitir números
