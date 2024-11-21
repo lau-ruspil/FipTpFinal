@@ -5,6 +5,9 @@ import { Proveedor } from "./Proveedor";
 
 import * as rls from "readline-sync";
 
+// constante de caracteres para separacion
+const lineaGuiones: string = "─".repeat(100);
+
 // Clase Red
 export class Red {
 	private nombre: string = "";
@@ -33,19 +36,21 @@ export class Red {
 
 	// Da de alta una nueva Veterinaria
 	// Retorna -1 o el ID de la veterinaria generada si tuvo éxito
-	public darDeAltaVeterinaria(veterinaria?: Veterinaria): Veterinaria | undefined {
-		//A modo de testeo tambien recibe una Veterinaria ya definida (precarga)		
-		if (veterinaria==undefined){
+	public darDeAltaVeterinaria(
+		veterinaria?: Veterinaria
+	): Veterinaria | undefined {
+		//A modo de testeo tambien recibe una Veterinaria ya definida (precarga)
+		if (veterinaria == undefined) {
 			console.log("Ingrese los datos de la Veterinaria:");
-			let persona = Persona.altaPersona(this.veterinarias);		
+			let persona = Persona.altaPersona(this.veterinarias);
 			let veterinaria = new Veterinaria(
 				persona.getID(),
 				persona.getNombre(),
 				persona.getDireccion(),
 				persona.getTelefono()
-			);		
+			);
 			this.veterinarias.push(veterinaria);
-		}else{
+		} else {
 			this.veterinarias.push(veterinaria);
 		}
 		return veterinaria;
@@ -70,8 +75,8 @@ export class Red {
 
 	//Crea un nuevo proveedor
 	public darDeAltaProovedor(proveedor?: Proveedor): Proveedor | undefined {
-		//A modo de testeo tambien recibe una Veterinaria ya definida (precarga)		
-		if (proveedor==undefined){
+		//A modo de testeo tambien recibe una Veterinaria ya definida (precarga)
+		if (proveedor == undefined) {
 			console.log("Ingrese los datos del Proveedor:");
 			let nuevaPersona: Persona = Persona.altaPersona(this.proveedores);
 
@@ -86,7 +91,7 @@ export class Red {
 				insumos
 			);
 			this.proveedores.push(proveedor);
-		}else{
+		} else {
 			this.proveedores.push(proveedor);
 		}
 		return proveedor;
@@ -197,23 +202,23 @@ export class Red {
 		}
 	}
 
-	// Muestra el Menu Principal de la RED
+	// Muestra el Menu Principal de la REDmodificar
 	public mostrarMenu(): void {
 		let opcion: number = -1;
 		while (opcion !== 2) {
 			console.clear();
-			console.log("────────────────────────────────────────");
+			console.log(lineaGuiones);
 			console.info(
 				`Bienvenidos a la red de veterinarias ${this.getNombre()}`
 			);
-			console.log("────────────────────────────────────────");
+			console.log(lineaGuiones);
 			console.log("VETERINARIAS");
 
 			Veterinaria.mostrarListado(this.veterinarias);
-			console.log("────────────────────────────────────────");
+			console.log(lineaGuiones);
 			console.log("PROVEEDORES");
 			Proveedor.mostrarListado(this.proveedores);
-			console.log("────────────────────────────────────────");
+			console.log(lineaGuiones);
 			// Devuelve indices empezando desde el 0
 			opcion = rls.keyInSelect(
 				["VETERINARIAS", "PROVEEDORES", "SALIR"],
@@ -248,10 +253,10 @@ export class Red {
 		let opcion: number = -1;
 		while (opcion !== 4) {
 			console.clear();
-			console.log("────────────────────────────────────────");
+			console.log(lineaGuiones);
 			console.log("VETERINARIAS");
 			Veterinaria.mostrarListado(this.veterinarias);
-			console.log("────────────────────────────────────────");
+			console.log(lineaGuiones);
 			opcion = rls.keyInSelect(
 				[
 					"AGREGAR VETERINARIA",
@@ -298,10 +303,10 @@ export class Red {
 		let opcion: number = -1;
 		while (opcion !== 3) {
 			console.clear();
-			console.log("────────────────────────────────────────"); //
+			console.log(lineaGuiones); //
 			console.log("PROVEEDORES");
 			Proveedor.mostrarListado(this.proveedores);
-			console.log("────────────────────────────────────────"); //
+			console.log(lineaGuiones); //
 			opcion = rls.keyInSelect(
 				[
 					"AGREGAR PROVEEDOR",

@@ -35,8 +35,6 @@ export class Cliente extends Persona {
 
 	// Establece el nombre del cliente. Extiende el método original de Entidad para no permitir números
 	public setNombre(nombre: string): void {
-		super.setNombre(nombre);
-
 		// Verificar si el nombre tiene números
 		if (nombre.match(/\d/)) {
 			//busca cualquier numero en el nombre
@@ -44,18 +42,21 @@ export class Cliente extends Persona {
 				`${nombre} Nombre inválido: El nombre no puede ser un número o contener números.`
 			);
 		}
+		super.setNombre(nombre);
 	}
 
-    // Muestra un listado de las clientes cargados
-    public static mostrarListado(cliente: Cliente[]): void{
-        if (cliente.length > 0) {
-            cliente.forEach((cliente) => {
-                console.log(
-                    `\tID: ${cliente.getID()} - Nombre: ${cliente.getNombre()} - Dirección: ${cliente.getDireccion()} - Visitas: ${cliente.getVisitas()} - VIP: ${cliente.esVip()?'Si':'No'}`
-                );
-            });
-        }else{
-            console.warn("\tNo hay registros."); // Si no hay entidades, informa al usuario
-        }
-    }
+	// Muestra un listado de las clientes cargados
+	public static mostrarListado(cliente: Cliente[]): void {
+		if (cliente.length > 0) {
+			cliente.forEach((cliente) => {
+				console.log(
+					`\tID: ${cliente.getID()} - Nombre: ${cliente.getNombre()} - Dirección: ${cliente.getDireccion()} - Visitas: ${cliente.getVisitas()} - VIP: ${
+						cliente.esVip() ? "Si" : "No"
+					}`
+				);
+			});
+		} else {
+			console.warn("\tNo hay registros."); // Si no hay entidades, informa al usuario
+		}
+	}
 }

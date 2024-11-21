@@ -50,8 +50,6 @@ export class Paciente extends Entidad {
 
 	// Establece el nombre del paciente. Extiende el método original de Entidad para no permitir números
 	public setNombre(nombre: string): void {
-		super.setNombre(nombre);
-
 		// Verificar si el nombre tiene números
 		if (nombre.match(/\d/)) {
 			//busca cualquier numero en el nombre
@@ -59,5 +57,6 @@ export class Paciente extends Entidad {
 				`${nombre} Nombre inválido: El nombre no puede ser un número o contener números.`
 			);
 		}
+		super.setNombre(nombre);
 	}
 }

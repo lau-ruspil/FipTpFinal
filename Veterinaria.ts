@@ -5,6 +5,9 @@ import { Paciente } from "./Paciente";
 
 import * as rls from "readline-sync";
 
+// Constante para separacion en lineas
+const lineaGuiones: string = "─".repeat(100);
+
 // Clase Veterinaria
 export class Veterinaria extends Persona {
 	private clientes: Cliente[] = [];
@@ -18,13 +21,23 @@ export class Veterinaria extends Persona {
 		telefono: string
 	) {
 		super(id, nombre, direccion, telefono);
-		
-		//A modo de testeo tambien recibe una Veterinaria ya definida (precarga)		
-		const cli: Cliente = new Cliente(1002, 'Aldo López', 'Guisasola 3623', '155456**');
-		this.darDeAltaCliente(cli);
-		const pac: Paciente = new Paciente(1003, 1002, 'Erahí', "Gato", this.clientes);		
-		this.darDeAltaPaciente(cli.getID(), pac);
 
+		//A modo de testeo tambien recibe una Veterinaria ya definida (precarga)
+		const cli: Cliente = new Cliente(
+			1002,
+			"Aldo López",
+			"Guisasola 3623",
+			"155456**"
+		);
+		this.darDeAltaCliente(cli);
+		const pac: Paciente = new Paciente(
+			1003,
+			1002,
+			"Erahí",
+			"Gato",
+			this.clientes
+		);
+		this.darDeAltaPaciente(cli.getID(), pac);
 	}
 
 	// Registra una visita de un cliente determinado (Las visitas se cuentan desde cualquiera de las sucursales de la red)
@@ -38,9 +51,7 @@ export class Veterinaria extends Persona {
 		}
 
 		// Obtener la veterinaria
-		const cliente = Entidad.obtenerEntidad(
-			this.clientes
-		) as Cliente;
+		const cliente = Entidad.obtenerEntidad(this.clientes) as Cliente;
 
 		if (cliente !== undefined) {
 			cliente.setVisitas(cliente.getVisitas() + 1); // Incrementar visitas
@@ -52,8 +63,11 @@ export class Veterinaria extends Persona {
 	}
 
 	// Crear un nuevo Paciente
-	public darDeAltaPaciente(idDuenio?: number, paciente?: Paciente,): Paciente | undefined {
-		if (paciente==undefined){
+	public darDeAltaPaciente(
+		idDuenio?: number,
+		paciente?: Paciente
+	): Paciente | undefined {
+		if (paciente == undefined) {
 			if (this.clientes.length === 0) {
 				console.warn(
 					`No hay registros cargados. Agregue un cliente para asignar un paciente.`
@@ -110,8 +124,10 @@ export class Veterinaria extends Persona {
 			console.log(paciente);
 			this.pacientes.push(paciente);
 
-			console.log(`Paciente ${paciente.getNombre()} agregado exitosamente.`);
-		}else{
+			console.log(
+				`Paciente ${paciente.getNombre()} agregado exitosamente.`
+			);
+		} else {
 			this.pacientes.push(paciente);
 		}
 
@@ -120,8 +136,8 @@ export class Veterinaria extends Persona {
 
 	// Da de alta un nuevo Cliente
 	public darDeAltaCliente(cliente?: Cliente): Cliente | undefined {
-		//A modo de testeo tambien recibe una Veterinaria ya definida (precarga)		
-		if (cliente==undefined){
+		//A modo de testeo tambien recibe una Veterinaria ya definida (precarga)
+		if (cliente == undefined) {
 			console.log("Ingrese los datos del Cliente:");
 			let persona: Persona = Persona.altaPersona(this.clientes);
 			let cliente: Cliente = new Cliente(
@@ -131,7 +147,7 @@ export class Veterinaria extends Persona {
 				persona.getTelefono()
 			);
 			this.clientes.push(cliente);
-		}else{
+		} else {
 			this.clientes.push(cliente);
 		}
 		return cliente;
@@ -226,9 +242,9 @@ export class Veterinaria extends Persona {
 		let opcion: number = -1;
 		while (opcion !== 2) {
 			console.clear();
-			console.log("────────────────────────────────────────");
+			console.log(lineaGuiones);
 			console.info(`Bienvenidos a la veterinaria ${this.getNombre()}`);
-			console.log("────────────────────────────────────────");
+			console.log(lineaGuiones);
 			opcion = rls.keyInSelect(
 				["VER CLIENTES", "VER PACIENTES", "VOLVER"],
 				"Opción: ",
@@ -261,10 +277,10 @@ export class Veterinaria extends Persona {
 		let opcion: number = -1;
 		while (opcion !== 4) {
 			console.clear();
-			console.log("────────────────────────────────────────");
+			console.log(lineaGuiones);
 			console.log("CLIENTES");
 			Cliente.mostrarListado(this.clientes);
-			console.log("────────────────────────────────────────");
+			console.log(lineaGuiones);
 			opcion = rls.keyInSelect(
 				[
 					"AGREGAR CLIENTE",
@@ -281,15 +297,15 @@ export class Veterinaria extends Persona {
 					case 0:
 						this.darDeAltaCliente();
 						break;
-					case 1: 
-						this.registrarVisita()
+					case 1:
+						this.registrarVisita();
 						break;
 					case 2:
 						this.modificarCliente();
 						break;
 					case 3:
 						Entidad.darDeBajaEntidad(this.clientes);
-						break;						
+						break;
 				}
 			} catch (error) {
 				console.error(
@@ -310,7 +326,7 @@ export class Veterinaria extends Persona {
 
 			// Encabezado para la relación entre clientes y pacientes
 			console.log("RELACIÓN CLIENTES Y PACIENTES");
-			console.log("────────────────────────────────────────"); //
+			console.log(lineaGuiones); //
 			if (this.clientes.length === 0) {
 				console.warn(
 					`\tNo hay registros de clientes cargados. Por favor, agregue clientes desde el menú "Ver Clientes".`
@@ -339,9 +355,8 @@ export class Veterinaria extends Persona {
 					console.log("\tNo tiene pacientes asignados.");
 					// Si no hay pacientes, lo indica.
 				}
-				console.log("────────────────────────────────────────"); // Línea final para cerrar la sección.
+				console.log(lineaGuiones); // Línea final para cerrar la sección.
 			});
-			
 
 			// Muestra las opciones del submenú y permite seleccionar una.
 			opcion = rls.keyInSelect(
@@ -375,14 +390,14 @@ export class Veterinaria extends Persona {
 	}
 
 	// Muestra un listado de las proveedores cargados
-	public static mostrarListado(veterinarias: Veterinaria[]): void{
+	public static mostrarListado(veterinarias: Veterinaria[]): void {
 		if (veterinarias.length > 0) {
 			veterinarias.forEach((veterinaria) => {
 				console.log(
 					`\tID: ${veterinaria.getID()} - Nombre: ${veterinaria.getNombre()} - Dirección: ${veterinaria.getDireccion()} - Tel: ${veterinaria.getTelefono()}`
 				);
 			});
-		}else{
+		} else {
 			console.warn("\tNo hay registros."); // Si no hay entidades, informa al usuario
 		}
 	}
