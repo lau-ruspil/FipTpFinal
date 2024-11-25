@@ -22,12 +22,12 @@ export class Red {
 	}
 
 	// Retorna el nombre
-	public getNombre(): string {
+	private getNombre(): string {
 		return this.nombre;
 	}
 
 	// Establece el nombre
-	public setNombre(nombre: string): void {
+	private setNombre(nombre: string): void {
 		if (nombre == undefined || nombre.length < 1) {
 			throw new Error(`Nombre inválido (nombre: ${nombre}).`);
 		}
@@ -98,7 +98,7 @@ export class Red {
 	}
 
 	// Modifica una Veterinaria
-	public modificarVeterinaria(): void {
+	private modificarVeterinaria(): void {
 		if (this.veterinarias.length === 0) {
 			console.warn(`No hay registros cargados.`);
 			rls.keyInPause("Presione una tecla para continuar...", {
@@ -148,7 +148,7 @@ export class Red {
 	}
 
 	// Modifica un proveedor
-	public modificarProveedor(): void {
+	private modificarProveedor(): void {
 		if (this.proveedores.length == 0) {
 			console.warn(`No hay registros cargados.`);
 			rls.keyInPause(`Presione una tecla para continuar...`, {
@@ -202,8 +202,8 @@ export class Red {
 		}
 	}
 
-	// Muestra el Menu Principal de la REDmodificar
-	public mostrarMenu(): void {
+	// Muestra el Menu Principal de la RED
+	public mostrarMenuPrincipal(): void {
 		let opcion: number = -1;
 		while (opcion !== 2) {
 			console.clear();
@@ -249,7 +249,7 @@ export class Red {
 	}
 
 	// SUBMENU VETERINARIAS
-	public mostrarSubMenuVeterinarias(): void {
+	private mostrarSubMenuVeterinarias(): void {
 		let opcion: number = -1;
 		while (opcion !== 4) {
 			console.clear();
@@ -278,7 +278,7 @@ export class Red {
 							Entidad.obtenerEntidad(
 								this.veterinarias
 							) as Veterinaria
-						)?.mostrarMenu();
+						)?.menuSeleccionVeterinaria();
 						break;
 					case 2:
 						this.modificarVeterinaria();

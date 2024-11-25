@@ -3,12 +3,13 @@ import { IEntidad } from "./IEntidad";
 
 import * as rls from "readline-sync"; // Para entrada de datos en consola
 
+// Define los valores mínimos y máximos para los IDs permitidos
 const MIN_ID: number = 1; // ID minimo permitido
 const MAX_ID: number = 999999; // ID maximo permitido
 
 // Clase 'Entidad' que implementa la interfaz 'IEntidad'
 export class Entidad implements IEntidad {
-	private id: number = 0; // ID unico de la entrada
+	private id: number = 0; // ID unico de la entidad
 	private nombre: string = ""; // Nombre de la entidad
 
 	// Constructor de la clase Persona
@@ -16,7 +17,9 @@ export class Entidad implements IEntidad {
 		// Validar si el id es indefinido o es menor a un caracter
 		if (id == undefined || id < 1) throw Error(`ID inválido (id: ${id}`);
 
-		this.id = id;
+		this.id = id; // Asigna el ID validado
+
+		// Llama al setter de nombre para asegurarse de que sea válido
 		this.setNombre(nombre);
 	}
 
@@ -30,118 +33,132 @@ export class Entidad implements IEntidad {
 		return this.nombre;
 	}
 
-	// Establece el nombre de la entidad
+	// Establece el nombre de la entidad con validaciones
 	public setNombre(nombre: string): void {
-		//Valida que no se pase un string indefinido
+		// Validación: El nombre no puede ser indefinido
 		if (nombre == undefined) {
 			throw Error(`Nombre inválido (nombre: '${nombre}')`);
 		}
 
-		// Validar si el nombre tiene menos de 3 caracteres
+		// Validación: El nombre debe tener al menos 3 caracteres
 		if (nombre.length < 3) {
 			throw new Error(
 				`Nombre inválido: El nombre  debe tener al menos 3 caracteres. (Nombre: '${nombre}')`
 			);
 		}
 
+		// Asigna el nombre si es válido
 		this.nombre = nombre;
 	}
 
-	// Función estática que genera un número entero aleatorio entre min y max
+	// Metodo estático que genera un número entero aleatorio entre un mínimo y un máximo
 	private static obtenerNumeroAleatorio(min: number, max: number): number {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
-	// Genera un ID unico validando que no se repita en la lista de entidades
+	// Método estático privado que genera un ID único, comprobando que no se repita en la lista de entidades
 	private static generarUID(entidades: Entidad[]): number {
-		let UID: number = Entidad.obtenerNumeroAleatorio(MIN_ID, MAX_ID); // ¿Sería lo mismo poner this.obtenerNumeroAleatorio?
+		// Genera un ID aleatorio dentro del rango permitido
+		let UID: number = Entidad.obtenerNumeroAleatorio(MIN_ID, MAX_ID);
 
-		// Verifica si el ID generado ya existe
+		// Verifica si el ID generado ya existe en la lista de entidades
 		if (
 			entidades.filter((entidad) => {
-				entidad.getID() == UID;
+				entidad.getID() == UID; // Filtra las entidades con el mismo ID
 			}).length > 0
 		) {
-			//Si hay un número de Id que coincide vuelvo a llamar a la función
+			// Si ya existe, vuelve a generar un nuevo ID de manera recursiva
 			UID = Entidad.generarUID(entidades);
 		}
-		return UID; //En este punto dada la recursividad el número será único
+		return UID; // Retorna un ID único
 	}
 
-	// Retorna una nueva Entidad
+	// Método estático público que genera una nueva Entidad, pidiendo al usuario el nombre
 	public static altaEntidad(entidades: Entidad[]): Entidad {
-		let nombre: string = rls.question("Nombre: ");
-		return new Entidad(Entidad.generarUID(entidades), nombre);
+		let nombre: string = rls.question("Nombre: "); // Solicita el nombre de la entidad
+		return new Entidad(Entidad.generarUID(entidades), nombre); // Crea una nueva entidad con un ID único
 	}
 
-	// Muestra un listado de las entidades cargadas
+	// Muestra un listado de las entidades registradas
 	public static mostrarListado(entidades: Entidad[]): void {
+		// Verifica si hay entidades registradas
 		if (entidades.length > 0) {
+			// Si hay, las recorre y muestra el ID y nombre de cada una
 			entidades.forEach((entidad) => {
 				console.log(
 					`\tID: ${entidad.getID()} - Nombre: ${entidad.getNombre()}`
 				);
 			});
 		} else {
+			// Si no hay entidades, muestra un mensaje de advertencia
 			console.warn("\tNo hay registros."); // Si no hay entidades, informa al usuario
 		}
 	}
 
-	// Elimina una entidad
+	// Metodo estatico para eliminar una entidad de la lista
 	public static darDeBajaEntidad(entidades: Entidad[]): void {
+		// Verifica si hay entidades registradas
 		if (entidades.length == 0) {
 			console.warn(`No hay registros cargados.`);
+			// Pausa para que el usuario lea el mensaje
 			rls.keyInPause(`Presione una tecla para continuar...`, {
 				guide: false,
 			});
 			return;
 		}
 
-		// Solicita el nombre de la entidad a eliminar
+		// Solicita el ID de la entidad a eliminar
 		let id: number = rls.questionInt(`Ingrese el ID a eliminar: `);
+
+		// Busca la Entidad con el ID ingresado
 		const index: number = entidades.findIndex(
 			(entidad) => entidad.getID() == id
 		);
 
-		// Si se encuentra la Entidad
+		// Si la entidad existe, la elimina de la lista
 		if (index !== -1) {
-			// Elimina la entidad
-			entidades.splice(index, 1);
+			entidades.splice(index, 1); // Elimina la entidad del arreglo
 			console.info(`Eliminado/a correctamente.`);
 			rls.keyInPause(`Presione una tecla para continuar...`, {
 				guide: false,
 			});
 		} else {
-			// Si no se encuentra la entidad informa al usuario
+			// Si no se encuentra la entidad muestra un mensaje de advertencia
 			console.warn(`Registro no encontrado.`);
+			// Pausa para que el usuario lea el mensaje
 			rls.keyInPause(`Presione una tecla para continuar...`, {
 				guide: false,
 			});
 		}
 	}
 
-	// Retorna una Entidad dada su ID
+	// Metodo estático para obtener una entidad dada su ID
 	public static obtenerEntidad(entidades: Entidad[]): Entidad | undefined {
+		// Verifica si hay entidades registradas
 		if (entidades.length == 0) {
 			console.warn(`No hay registros cargados.`);
+			// Pausa para que el usuario lea el mensaje
 			rls.keyInPause(`Presione una tecla para continuar...`, {
 				guide: false,
 			});
 			return;
 		}
 
-		// Solicita el nombre de la entidad a eliminar
+		// Solicita el ID de la entidad a seleccionar
 		let id: number = rls.questionInt(`Ingrese el ID a seleccionar: `);
+
+		// Busca la entidad con el ID ingresado
 		const index: number = entidades.findIndex(
 			(entidad) => entidad.getID() == id
 		);
 
-		// Si se encuentra la Entidad
+		// Si la entidad existe, la retorna
 		if (index !== -1) {
 			return entidades[index];
 		} else {
-			// Si no se encuentra la entidad informa al usuario
+			// Si no se encuentra la entidad muestra un mensaje de error
 			console.error(`Registro no encontrado.`);
+			// Pausa para que el usuario lea el mensaje
 			rls.keyInPause(`Presione una tecla para continuar...`, {
 				guide: false,
 			});
