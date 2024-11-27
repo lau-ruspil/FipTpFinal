@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>VETERINARIAS BUENO</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<header>
+			<nav>
+				<h1>Red de Veterinarias Bueno</h1>
+				<ul>
+					<li><a href="#inicio">Inicio</a></li>
+					<li><a href="#clientes">Clientes</a></li>
+					<li><a href="#pacientes">Pacientes</a></li>
+					<li><a href="#visitas">Visitas</a></li>
+					<li><a href="#servicios">Servicios</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<section id="inicio">
+			<h2>Bienvenidos a la Red de Veterinarias Bueno</h2>
+			<p>
+				Ofrecemos atención médica para tus mascotas con los mejores
+				profesionales. Navega por las opciones del menú para gestionar
+				clientes, pacientes, visitas, y conocer nuestros servicios.
+			</p>
+		</section>
+
+		<section id="clientes">
+			<h2>Clientes</h2>
+			<div class="card-container" id="clientes-container">
+				<!-- Aquí aparecerán las tarjetas de clientes -->
+			</div>
+			<form id="formCliente">
+				<h3>Agregar Cliente</h3>
+				<label for="nombreCliente">Nombre:</label>
+				<input type="text" id="nombreCliente" required />
+				<span class="error"></span>
+
+				<label for="telefonoCliente">Teléfono:</label>
+				<input type="tel" id="telefonoCliente" required />
+				<span class="error"></span>
+
+				<button type="submit">Agregar Cliente</button>
+			</form>
+		</section>
+
+		<section id="pacientes">
+			<h2>Pacientes</h2>
+			<div class="card-container" id="pacientes-container">
+				<!-- Aquí aparecerán las tarjetas de pacientes -->
+			</div>
+			<form id="formPaciente">
+				<h3>Agregar Paciente</h3>
+				<label for="nombrePaciente">Nombre:</label>
+				<input type="text" id="nombrePaciente" required />
+				<span class="error"></span>
+
+				<label for="especiePaciente">Especie:</label>
+				<select id="especiePaciente" required>
+					<option value="">Seleccione</option>
+					<option value="Perro">Perro</option>
+					<option value="Gato">Gato</option>
+					<option value="Exótico">Exótico</option>
+				</select>
+				<span class="error"></span>
+
+				<label for="clienteIdPaciente">ID del Cliente:</label>
+				<input type="number" id="clienteIdPaciente" required />
+				<span class="error"></span>
+
+				<button type="submit">Agregar Paciente</button>
+			</form>
+		</section>
+
+		<section id="visitas">
+			<h2>Asignar Visita</h2>
+			<form id="formVisita">
+				<label for="clienteIdVisita">Cliente ID:</label>
+				<input type="number" id="clienteIdVisita" required />
+				<label for="pacienteIdVisita">Paciente ID:</label>
+				<input type="number" id="pacienteIdVisita" required />
+				<label for="fechaVisita">Fecha de Visita:</label>
+				<input type="date" id="fechaVisita" required />
+				<button type="submit">Asignar Visita</button>
+			</form>
+		</section>
+
+		<section id="servicios">
+			<h2>Servicios</h2>
+			<p>En Veterinarias Bueno ofrecemos:</p>
+			<ul>
+				<li>Consultas generales</li>
+				<li>Vacunación</li>
+				<li>Cirugías</li>
+				<li>Adopciones</li>
+				<li>Guardería para mascotas</li>
+			</ul>
+		</section>
+
+		<footer>
+			<p>&copy; 2024 Red de Veterinarias Bueno</p>
+		</footer>
+
+		<script src="./script.js"></script>
+	</body>
+</html>
