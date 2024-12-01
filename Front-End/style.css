@@ -55,7 +55,7 @@ section h2 {
 
 /* Formulario con bordes más pronunciados y sombra */
 form {
-	background: #ffffff;
+	background: #b5b5b5;
 	padding: 1.5rem;
 	border-radius: 8px;
 	margin-top: 2rem;
@@ -109,6 +109,12 @@ form input:hover,
 form select:hover {
 	border-color: #4f8bcb; /* Color de borde más claro al pasar el mouse */
 	background-color: #f1f8fd; /* Fondo más claro cuando el cursor pasa sobre él */
+}
+
+form .guia-telefono {
+	color: rgb(49, 49, 49);
+	margin-bottom: 2rem; /* Separación entre la guía y el siguiente elemento (botón) */
+	display: block;
 }
 
 /* Estilo para los botones */
@@ -180,13 +186,13 @@ form button:hover {
 
 /* Estilo de pie de página */
 footer {
-	background: #1e3a8a; /* Color azul oscuro */
+	background: #1e3a9f; /* Color azul oscuro */
 	color: #ffffff;
 	text-align: center;
 	padding: 1.5rem 0;
 	margin-top: 3rem;
 	font-size: 0.9rem;
-	position: relative;
+	/* position: relative; */
 	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -194,15 +200,13 @@ footer p {
 	margin: 0;
 }
 
-footer a {
+footer p {
 	color: #94d2bd;
-	text-decoration: none;
-	font-weight: bold;
 	transition: color 0.3s;
 }
 
-footer a:hover {
-	color: #ffffff;
+footer p:hover {
+	color: #8c8c8c;
 }
 
 .error {
@@ -210,5 +214,66 @@ footer a:hover {
 	font-size: 0.9rem;
 	margin-top: -0.8rem;
 	margin-bottom: 1rem;
-	display: none;
+}
+
+/* Fondo del modal */
+.modal-superposicion {
+	position: fixed; /* El modal se posiciona de manera fija respecto a la ventana del navegador */
+	top: 0; /* Se coloca en la parte superior de la pantalla */
+	left: 0; /* Se coloca en la parte izquierda de la pantalla */
+	width: 100%; /* El modal ocupará el 100% del ancho de la ventana */
+	height: 100%; /* El modal ocupará el 100% de la altura de la ventana */
+	background: rgba(
+		0,
+		0,
+		0,
+		0.5
+	); /* Fondo semitransparente de color negro (el 0.5 es la opacidad) */
+	display: flex; /* Se usa Flexbox para centrar el contenido del modal */
+	justify-content: center; /* Centra horizontalmente el contenido dentro del modal */
+	align-items: center; /* Centra verticalmente el contenido dentro del modal */
+	z-index: 1000; /* Asegura que el modal se muestre por encima de otros elementos en la página */
+}
+
+/* Contenedor del contenido del modal */
+.modal-contenido {
+	background: #ffffff; /* Fondo blanco para el contenido del modal */
+	padding: 2rem; /* Espaciado interior de 2rem (unidad relativa) alrededor del contenido */
+	border-radius: 8px; /* Bordes redondeados con un radio de 8px */
+	text-align: center; /* Centra el texto dentro del contenedor */
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra suave alrededor del contenedor */
+	width: 90%; /* El contenedor del modal ocupa el 90% del ancho de la pantalla */
+	max-width: 400px; /* El contenedor no puede ser más ancho de 400px */
+	animation: fadeIn 0.3s ease-in-out; /* Aplica la animación de aparición con una duración de 0.3 segundos */
+}
+
+/* Botón de cierre del modal */
+.modal-cierre {
+	background: #1e3a8a; /* Fondo azul oscuro para el botón */
+	color: #ffffff; /* Color del texto blanco */
+	border: none; /* Elimina el borde del botón */
+	border-radius: 5px; /* Bordes redondeados en el botón */
+	padding: 0.8rem 1.2rem; /* Espaciado interior en el botón (0.8rem en altura y 1.2rem en ancho) */
+	cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón */
+	margin-top: 1rem; /* Añade un margen superior de 1rem */
+	transition: background 0.3s ease; /* Aplica una transición suave al cambiar el color de fondo */
+}
+
+/* Estilo para cuando el cursor está sobre el botón de cierre */
+.modal-cierre:hover {
+	background: #4f8bcb; /* Cambia el fondo del botón a un azul más claro al pasar el ratón por encima */
+}
+
+/* @keyframes fadeIn: Define una animación para hacer que el modal aparezca de forma suave desde arriba y gane opacidad. */
+@keyframes fadeIn {
+	from {
+		opacity: 0; /* Empieza completamente invisible */
+		transform: translateY(
+			-20px
+		); /* Comienza desde 20px por encima de su posición original */
+	}
+	to {
+		opacity: 1; /* Termina completamente visible */
+		transform: translateY(0); /* Se mueve a su posición original */
+	}
 }
