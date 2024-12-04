@@ -1,0 +1,279 @@
+/* Estilos globales */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	line-height: 1.6;
+	background-color: #c4c4c4; /* Fondo claro general */
+}
+
+header {
+	background: #1e3a8a; /* Color de fondo del header */
+	color: #ffffff;
+	padding: 1.5rem 0;
+	text-align: center;
+}
+
+header nav ul {
+	list-style: none;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	margin: 0;
+}
+
+header nav ul li {
+	margin: 0 15px;
+}
+
+header nav ul li a {
+	text-decoration: none;
+	color: #ffffff;
+	font-weight: bold;
+	padding: 8px 12px;
+	border-radius: 5px;
+	transition: background 0.3s;
+}
+
+header nav ul li a:hover {
+	background: #4f8bcb;
+}
+
+section {
+	padding: 3rem;
+	margin: 2rem auto;
+	max-width: 1000px;
+	background: #ffffff;
+	border-radius: 8px;
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada */
+}
+
+section h2 {
+	color: #1e3a8a;
+	font-size: 2rem;
+}
+
+/* Formulario con bordes más pronunciados y sombra */
+form {
+	background: #b5b5b5;
+	padding: 1.5rem;
+	border-radius: 8px;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Sombra más notoria */
+	max-width: 450px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+form h3 {
+	margin-bottom: 0.5rem;
+	text-align: center;
+	color: #333;
+}
+
+form label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+	color: #333;
+}
+
+/* Estilo para los inputs, select y botones */
+form input,
+form select,
+form button {
+	display: block;
+	width: 100%;
+	margin-bottom: 1.5rem;
+	padding: 0.8rem;
+	font-size: 1rem;
+	border: 1px solid #ccc; /* Borde gris suave */
+	border-radius: 5px;
+	box-sizing: border-box;
+	background-color: #f9f9f9; /* Fondo gris claro para los campos de entrada */
+	color: #333; /* Texto oscuro */
+	transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Efecto cuando el input o select está enfocado */
+form input:focus,
+form select:focus {
+	border-color: #1e3a8a; /* Borde azul cuando está enfocado */
+	background-color: #e0f7fa; /* Fondo azul suave al hacer foco */
+	outline: none; /* Eliminar el borde predeterminado del navegador */
+}
+
+/* Efecto hover sobre los inputs y select */
+form input:hover,
+form select:hover {
+	border-color: #4f8bcb; /* Color de borde más claro al pasar el mouse */
+	background-color: #f1f8fd; /* Fondo más claro cuando el cursor pasa sobre él */
+}
+
+form .guia-telefono {
+	color: rgb(49, 49, 49);
+	margin-bottom: 2rem; /* Separación entre la guía y el siguiente elemento (botón) */
+	display: block;
+}
+
+/* Estilo para los botones */
+form button {
+	background: #00796b; /* Color de fondo verde para los botones */
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background 0.3s;
+}
+
+form button:hover {
+	background: #004d40; /* Color más oscuro al pasar el mouse */
+}
+
+/* Contenedor de tarjetas */
+.card-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2rem; /* Espaciado entre tarjetas */
+}
+
+/* Tarjetas mejoradas */
+.card {
+	background: #ffffff; /* Fondo blanco */
+	padding: 2rem;
+	border-radius: 8px;
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Sombra más prominente */
+	flex: 1 1 calc(30% - 2rem); /* Tres tarjetas por fila */
+	max-width: calc(30% - 2rem);
+	background-color: #bababa; /* Fondo blanco puro para contraste */
+	border: 1px solid #ddd; /* Borde gris suave */
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+	transform: translateY(-10px); /* Efecto de "flotación" al pasar el cursor */
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Sombra más profunda al hover */
+}
+
+.card h4 {
+	margin: 0 0 1rem;
+	color: #1e3a8a; /* Título azul más oscuro */
+	font-size: 1.6rem;
+	font-weight: bold;
+}
+
+.card p {
+	margin: 0.5rem 0;
+	color: #333; /* Texto más oscuro para contraste */
+	font-size: 1rem;
+}
+
+.card button {
+	background: #e63946; /* Rojo vibrante */
+	color: white;
+	padding: 0.8rem 1.2rem;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.card button:hover {
+	background: #b00020; /* Rojo más oscuro en hover */
+	transform: scale(1.05); /* Escalado para el botón al hacer hover */
+}
+
+/* Estilo de pie de página */
+footer {
+	background: #1e3a9f; /* Color azul oscuro */
+	color: #ffffff;
+	text-align: center;
+	padding: 1.5rem 0;
+	margin-top: 3rem;
+	font-size: 0.9rem;
+	/* position: relative; */
+	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+	margin: 0;
+}
+
+footer p {
+	color: #94d2bd;
+	transition: color 0.3s;
+}
+
+footer p:hover {
+	color: #8c8c8c;
+}
+
+.error {
+	color: red;
+	font-size: 0.9rem;
+	margin-top: -0.8rem;
+	margin-bottom: 1rem;
+}
+
+/* Fondo del modal */
+.modal-superposicion {
+	position: fixed; /* El modal se posiciona de manera fija respecto a la ventana del navegador */
+	top: 0; /* Se coloca en la parte superior de la pantalla */
+	left: 0; /* Se coloca en la parte izquierda de la pantalla */
+	width: 100%; /* El modal ocupará el 100% del ancho de la ventana */
+	height: 100%; /* El modal ocupará el 100% de la altura de la ventana */
+	background: rgba(
+		0,
+		0,
+		0,
+		0.5
+	); /* Fondo semitransparente de color negro (el 0.5 es la opacidad) */
+	display: flex; /* Se usa Flexbox para centrar el contenido del modal */
+	justify-content: center; /* Centra horizontalmente el contenido dentro del modal */
+	align-items: center; /* Centra verticalmente el contenido dentro del modal */
+	z-index: 1000; /* Asegura que el modal se muestre por encima de otros elementos en la página */
+}
+
+/* Contenedor del contenido del modal */
+.modal-contenido {
+	background: #ffffff; /* Fondo blanco para el contenido del modal */
+	padding: 2rem; /* Espaciado interior de 2rem (unidad relativa) alrededor del contenido */
+	border-radius: 8px; /* Bordes redondeados con un radio de 8px */
+	text-align: center; /* Centra el texto dentro del contenedor */
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra suave alrededor del contenedor */
+	width: 90%; /* El contenedor del modal ocupa el 90% del ancho de la pantalla */
+	max-width: 400px; /* El contenedor no puede ser más ancho de 400px */
+	animation: fadeIn 0.3s ease-in-out; /* Aplica la animación de aparición con una duración de 0.3 segundos */
+}
+
+/* Botón de cierre del modal */
+.modal-cierre {
+	background: #1e3a8a; /* Fondo azul oscuro para el botón */
+	color: #ffffff; /* Color del texto blanco */
+	border: none; /* Elimina el borde del botón */
+	border-radius: 5px; /* Bordes redondeados en el botón */
+	padding: 0.8rem 1.2rem; /* Espaciado interior en el botón (0.8rem en altura y 1.2rem en ancho) */
+	cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón */
+	margin-top: 1rem; /* Añade un margen superior de 1rem */
+	transition: background 0.3s ease; /* Aplica una transición suave al cambiar el color de fondo */
+}
+
+/* Estilo para cuando el cursor está sobre el botón de cierre */
+.modal-cierre:hover {
+	background: #4f8bcb; /* Cambia el fondo del botón a un azul más claro al pasar el ratón por encima */
+}
+
+/* @keyframes fadeIn: Define una animación para hacer que el modal aparezca de forma suave desde arriba y gane opacidad. */
+@keyframes fadeIn {
+	from {
+		opacity: 0; /* Empieza completamente invisible */
+		transform: translateY(
+			-20px
+		); /* Comienza desde 20px por encima de su posición original */
+	}
+	to {
+		opacity: 1; /* Termina completamente visible */
+		transform: translateY(0); /* Se mueve a su posición original */
+	}
+}

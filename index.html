@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- Título de la pestaña -->
+		<title>VETERINARIAS BUENO</title>
+		<!-- CSS -->
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<!-- Cuerpo de Página -->
+	<body>
+		<!-- Encabezado de la página -->
+		<header>
+			<!-- Menú de navegación -->
+			<nav>
+				<!-- Titulo principal -->
+				<h1>Red de Veterinarias Bueno</h1>
+				<!-- Secciones de la pagina -->
+				<ul>
+					<li><a href="#inicio">Inicio</a></li>
+					<li><a href="#clientes">Clientes</a></li>
+					<li><a href="#pacientes">Pacientes</a></li>
+					<li><a href="#visitas">Visitas</a></li>
+					<li><a href="#servicios">Servicios</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<!-- Sección de inicio -->
+		<section id="inicio">
+			<!-- Título de la sección -->
+			<h2>Bienvenidos a la Red de Veterinarias Bueno</h2>
+			<!-- Descripción de la sección -->
+			<p>
+				Ofrecemos atención médica para tus mascotas con los mejores
+				profesionales. Navega por las opciones del menú para gestionar
+				clientes, pacientes, visitas, y conocer nuestros servicios.
+			</p>
+		</section>
+
+		<!-- Sección Clientes -->
+		<section id="clientes">
+			<!-- Título de la sección -->
+			<h2>Clientes</h2>
+			<!-- Contenedor de las tarjetas de clientes -->
+			<div class="card-container" id="clientes-container">
+				<!-- Aquí aparecerán las tarjetas de clientes -->
+			</div>
+
+			<!-- Formulario para agregar Clientes -->
+			<form id="formCliente">
+				<!-- Título de formulario -->
+				<h3>Agregar Cliente</h3>
+				<!-- Input para nombre de Cliente -->
+				<label for="nombreCliente">Nombre:</label>
+				<input
+					type="text"
+					id="nombreCliente"
+					placeholder="Ejemplo: Alejandro"
+				/>
+				<!-- Elemento <span> para mostrar errores del nombre del cliente -->
+				<span class="error"></span>
+
+				<!-- Input para teléfono de Cliente -->
+				<label for="telefonoCliente">Teléfono:</label>
+				<input
+					type="tel"
+					id="telefonoCliente"
+					placeholder="Ejemplo: 2284-225443"
+				/>
+				<!-- Elemento <span> para mostrar errores del teléfono del cliente-->
+				<span class="error"></span>
+				<!-- Elemento <span> para mostrar guia de lo que tiene que ingresar el usaurio -->
+				<span class="guia-telefono">
+					Ingrese su número sin el 15 y después del código de área
+				</span>
+
+				<!-- Botón para enviar el formulario y agregar cliente -->
+				<button type="submit">Agregar Cliente</button>
+			</form>
+		</section>
+
+		<!-- Sección Pacientes -->
+		<section id="pacientes">
+			<!-- Título de la sección -->
+			<h2>Pacientes</h2>
+			<!-- Contenedor de las tarjetas de pacientes -->
+			<div class="card-container" id="pacientes-container">
+				<!-- Aquí aparecerán las tarjetas de pacientes -->
+			</div>
+
+			<!-- Formulario para agregar pacientes -->
+			<form id="formPaciente">
+				<!-- Título del formulario -->
+				<h3>Agregar Paciente</h3>
+
+				<!-- Input para el nombre del paciente -->
+				<label for="nombrePaciente">Nombre:</label>
+				<input
+					type="text"
+					id="nombrePaciente"
+					placeholder="Ejemplo: Max"
+				/>
+				<!-- Elemento <span> para mostrar errores del nombre del paciente -->
+				<span class="error"></span>
+
+				<!-- Selector para seleccionar la especie del paciente -->
+				<label for="especiePaciente">Especie:</label>
+				<select id="especiePaciente">
+					<option value="">Seleccione</option>
+					<option value="Perro">Perro</option>
+					<option value="Gato">Gato</option>
+					<option value="Exótico">Exótico</option>
+				</select>
+				<!-- Elemento <span> para mostrar errores de la selección de la especie del paciente -->
+				<span class="error"></span>
+
+				<!-- Input para el ID del cliente asociado con el paciente -->
+				<label for="clienteIdPaciente">ID del Cliente:</label>
+				<input
+					type="number"
+					id="clienteIdPaciente"
+					placeholder="Ejemplo: 1234"
+				/>
+				<!-- Elemento <span> para mostrar errores del ID del cliente -->
+				<span class="error"></span>
+
+				<!-- Botón para enviar el formulario y agregar Pacientes -->
+				<button type="submit">Agregar Paciente</button>
+			</form>
+		</section>
+
+		<!-- Sección Visitas -->
+		<section id="visitas">
+			<!-- Título de la sección -->
+			<h2>Asignar Visita</h2>
+
+			<!-- Formulario para asignar visitas -->
+			<form id="formVisita">
+				<!-- Input para el ID del cliente -->
+				<label for="clienteIdVisita">ID del Cliente:</label>
+				<input
+					type="number"
+					id="clienteIdVisita"
+					placeholder="Ejemplo: 1234"
+				/>
+				<!-- Elemento <span> para mostrar errores del ID del cliente -->
+				<span class="error"></span>
+
+				<!-- Input para el ID del paciente -->
+				<label for="pacienteIdVisita">ID del Paciente:</label>
+				<input
+					type="number"
+					id="pacienteIdVisita"
+					placeholder="Ejemplo: 1234"
+				/>
+				<!-- Elemento <span> para mostrar errores del ID del paciente -->
+				<span class="error"></span>
+
+				<!-- Input para Seleccionar una fecha de Visita -->
+				<label for="fechaVisita">Fecha de Visita:</label>
+				<input type="date" id="fechaVisita" />
+				<!-- Elemento <span> para mostrar errores de la fecha de la visita -->
+				<span class="error"></span>
+
+				<!-- Botón para enviar el formulario y registrar la visita -->
+				<button type="submit">Asignar Visita</button>
+			</form>
+		</section>
+
+		<!-- Sección Servicios -->
+		<section id="servicios">
+			<!-- Título de la sección -->
+			<h2>Servicios</h2>
+			<!-- Descripción breve de la sección -->
+			<p>En Veterinarias Bueno ofrecemos:</p>
+			<!-- Listado de servicios que ofrece la red -->
+			<ul>
+				<li>Consultas generales</li>
+				<li>Vacunación</li>
+				<li>Cirugías</li>
+				<li>Adopciones</li>
+				<li>Guardería para mascotas</li>
+			</ul>
+		</section>
+
+		<!-- Pie de página -->
+		<footer>
+			<!-- Copyright -->
+			<p>&copy; 2024 Red de Veterinarias Bueno</p>
+		</footer>
+
+		<!-- Link Javascript Externo -->
+		<script src="./script.js"></script>
+	</body>
+</html>
